@@ -1,0 +1,54 @@
+profile_short_name:Typica M Washed
+profile_designer:C Lab Roastery Ltd.
+profile_description:Finca La Papaya Washed Profile:\v\vRecommended Levels:\v\vClean: Level 1.8  (~14% development).\v\vSweet: Level 2.0 (~16% development).\v\vStrong: Level 2.6 (~20% development).\v\v參考：\vC40手沖刻度：26 - 28 格\v建議養豆時間 ： 14 - 30 天
+profile_schema_version:1.4
+emulation_mode:0.0
+recommended_level:2.0
+expect_fc:206.0
+expect_colrchange:170.0
+preheat_power:750.0
+preheat_nominal_temperature:240.0
+preheat_min_power_offset:10.0
+preheat_min_time:20.0
+preheat_max_time:60.0
+preheat_check_gradient_time:30.0
+preheat_target_in_future:30.0
+preheat_mode:5.0
+preheat_end_detection_count:5.0
+preheat_temperature_proximity:8.5
+roast_required_power:1200.0
+roast_min_desired_rate_of_rise:0.1
+roast_target_in_future:25.0
+roast_use_prediction_method:1.0
+roast_target_timeshift:1.0
+roast_end_by_time_ratio:1.0
+roast_PID_Kp:0.717
+roast_PID_Ki:0.0
+roast_PID_Kd:3.55
+roast_PID_min_i:0.0
+roast_PID_max_i:0.0
+roast_PID_iLimitApplyAtZero:1.0
+roast_PID_differentialOnError:1.0
+specific_heat_adj_upper_temperature_limit:180.0
+specific_heat_adj_lower_temperature_limit:80.0
+specific_heat_adj_multiplier_Kp:2.1
+specific_heat_adj_multiplier_Kd:4.0
+zone1_time_start:410.0
+zone1_time_end:460.0
+zone1_multiplier_Kp:1.0
+zone1_multiplier_Kd:1.0
+zone1_boost:-2
+zone2_time_start:0.0
+zone2_time_end:0.0
+zone2_multiplier_Kp:1.0
+zone2_multiplier_Kd:1.0
+zone2_boost:3
+corner1_time_start:0.0
+corner1_time_end:0.0
+cooldown_hi_speed:16500.0
+cooldown_lo_speed:16500.0
+cooldown_lo_temperature:70.0
+roast_levels:206.0,208.0,213.0,215.0,220.0,225.0,230.0
+profile_modified:18/05/2025 12:58:38 UTC
+roast_profile:0.0,30.0,0,0.0,38.1651759592,97.0,115.654100142,127.8,83.5279095613,114.2,178.09663128,154.2,280.2,186.4,210.709196372,165.2,337.720829039,203.9,458.5,213.7,393.911099029,209.5,504.239396223,216.7,630.9,222.6,589.005673597,221.5,0,0.0
+fan_profile:0.0,14709.6315403,0,0.0,135.164980941,14743.5245339,179.402364572,14539.6844529,158.8,14636.3373389,201.605846884,14435.5201645,378.500273361,13800.0,294.241675093,13802.3054731,471.710689173,13797.4495884,536.480135769,13800.0,457.64662651,13795.6701202,0,0.0

@@ -1,0 +1,54 @@
+profile_short_name:Catuai NAT Panama v2
+profile_designer:Custom Profile
+profile_description:Panama Volcán Aurora Estate Catuai Natural 1525-1600m\v\vVersion 2 - Adjusted based on first roast data.\vActual first crack observed at ~198C (via ROR analysis).\vLight roast for pour-over / filter.\vMoisture: 10.4% | Density: 829g/L\v\vKey changes from v1:\v- expect_fc lowered 206->198 to match actual crack point\v- Target curve significantly lowered post-crack\v- Fan speed kept higher for better evenness\v- Preheat reduced for gentler start\v\vRecommended Levels:\v\vClean & Bright: Level 2.0 (~202C, ~14% dev)\vSweet & Balanced: Level 2.5 (~204C, ~16% dev)\vRich & Fruity: Level 3.0 (~206C, ~18% dev)\v\vSuggested load: 120g. If uneven, try 100-110g.\v
+profile_schema_version:1.4
+emulation_mode:0.0
+recommended_level:2.0
+expect_fc:198.0
+expect_colrchange:0.0
+preheat_power:800.0
+preheat_nominal_temperature:240.0
+preheat_min_power_offset:10.0
+preheat_min_time:20.0
+preheat_max_time:60.0
+preheat_check_gradient_time:30.0
+preheat_target_in_future:30.0
+preheat_mode:5.0
+preheat_end_detection_count:5.0
+preheat_temperature_proximity:8.5
+roast_required_power:1200.0
+roast_min_desired_rate_of_rise:0.2
+roast_target_in_future:25.0
+roast_use_prediction_method:1.0
+roast_target_timeshift:1.0
+roast_end_by_time_ratio:0.75
+roast_PID_Kp:0.717
+roast_PID_Ki:0.0
+roast_PID_Kd:3.55
+roast_PID_min_i:0.0
+roast_PID_max_i:0.0
+roast_PID_iLimitApplyAtZero:1.0
+roast_PID_differentialOnError:1.0
+specific_heat_adj_upper_temperature_limit:180.0
+specific_heat_adj_lower_temperature_limit:80.0
+specific_heat_adj_multiplier_Kp:2.1
+specific_heat_adj_multiplier_Kd:4.0
+zone1_time_start:0.0
+zone1_time_end:0.0
+zone1_multiplier_Kp:1.0
+zone1_multiplier_Kd:1.0
+zone1_boost:0
+zone2_time_start:0.0
+zone2_time_end:0.0
+zone2_multiplier_Kp:1.0
+zone2_multiplier_Kd:1.0
+zone2_boost:0
+corner1_time_start:0.0
+corner1_time_end:0.0
+cooldown_hi_speed:16500.0
+cooldown_lo_speed:15500.0
+cooldown_lo_temperature:100.0
+roast_levels:200.0,202.0,204.0,206.0,208.0,210.0,212.0
+profile_modified:03/03/2026 15:00:00 UTC
+roast_profile:0.0,20.0,0,0.0,19.0,44.0,70.0,96.0,45.0,77.5,108.0,125.5,218.0,170.0,170.0,156.0,318.0,196.5,550.0,205.0,435.0,200.0,0,0.0
+fan_profile:0.0,14700.0,0,0.0,18.0,14700.0,60.0,14700.0,42.0,14700.0,244.0,14700.0,350.0,14500.0,330.0,14550.0,430.0,14100.0,580.0,13800.0,560.0,13800.0,0,0.0

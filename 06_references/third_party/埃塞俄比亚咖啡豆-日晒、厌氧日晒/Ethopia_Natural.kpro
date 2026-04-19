@@ -1,0 +1,54 @@
+profile_short_name:Ethopia Natural
+profile_designer:C Lab Roastery Ltd.
+profile_description:Ethopia Natural Profile:\v\vRecommended Levels:\v\vClean: Level 2.2  (~14% development).  \v\vSweet: Level 2.7 (~16.8% development).\v\vStrong: Level 3.2 (~20.7% development).\v\v參考：\vC40手沖刻度：26 - 28 格\v建議養豆時間 ： 7 - 14 天\v
+profile_schema_version:1.4
+emulation_mode:0.0
+recommended_level:2.2
+expect_fc:207.0
+expect_colrchange:0.0
+preheat_power:600
+preheat_nominal_temperature:240.0
+preheat_min_power_offset:10
+preheat_min_time:20.0
+preheat_max_time:50.0
+preheat_check_gradient_time:30.0
+preheat_target_in_future:15.0
+preheat_mode:5
+preheat_end_detection_count:5
+preheat_temperature_proximity:8.5
+roast_required_power:1200
+roast_min_desired_rate_of_rise:0.1
+roast_target_in_future:25.0
+roast_use_prediction_method:1
+roast_target_timeshift:1.0
+roast_end_by_time_ratio:0.33333
+roast_PID_Kp:0.7172
+roast_PID_Ki:0
+roast_PID_Kd:3.55
+roast_PID_min_i:0
+roast_PID_max_i:0
+roast_PID_iLimitApplyAtZero:1
+roast_PID_differentialOnError:1
+specific_heat_adj_upper_temperature_limit:180.0
+specific_heat_adj_lower_temperature_limit:80.0
+specific_heat_adj_multiplier_Kp:2.1
+specific_heat_adj_multiplier_Kd:4
+zone1_time_start:0.0
+zone1_time_end:0.0
+zone1_multiplier_Kp:1
+zone1_multiplier_Kd:1
+zone1_boost:2.0
+zone2_time_start:0.0
+zone2_time_end:0.0
+zone2_multiplier_Kp:1
+zone2_multiplier_Kd:1
+zone2_boost:4.0
+corner1_time_start:0.0
+corner1_time_end:0.0
+cooldown_hi_speed:16500
+cooldown_lo_speed:15500
+cooldown_lo_temperature:100.0
+roast_levels:206.0,210.0,213.0,215.0,220.0,225.0,230.0
+profile_modified:07/03/2025 07:18:40 UTC
+roast_profile:0.0,35.0,0,0.0,32.0566699737,64.9,111.665304788,129.2,75.1087811971,105.0,142.96225804,149.8,243.3,185.5,206.884728371,176.5,335.147865351,208.2,480.0,217.8,417.456755858,213.6,531.140112534,221.2,602.84661898,223.9,556.970182583,222.8,0,0.0
+fan_profile:0.0,15000.0,0,0.0,15.83832,15000.93,57.6174565769,15000.0,11.049610514,15000.0,151.05537886,15000.0,284.376522837,14118.6338333,234.548152673,14450.5913397,316.606882723,13903.9145907,385.012203786,14259.7864769,333.807428507,13981.0916263,410.31408106,14397.498299,449.238491724,14392.7024825,434.478028109,14397.5387346,0,0.0

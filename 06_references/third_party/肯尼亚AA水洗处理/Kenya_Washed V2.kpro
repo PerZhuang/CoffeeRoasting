@@ -1,0 +1,54 @@
+profile_short_name:Kenya AA W V2
+profile_designer:C Lab Roastery Ltd.
+profile_description:Kenya AA Washed V2 Profile:\v\vRecommended Levels:\v\vClean: Level 1.0  (~15% development).\v\vSweet: Level 1.2 (~18% development).\v\vStrong: Level 1.4 (~21% development).\v\v參考：\vC40手沖刻度：30 格\v建議養豆時間 ： 7 - 14 天\v
+profile_schema_version:1.4
+emulation_mode:0.0
+recommended_level:1.0
+expect_fc:203.0
+expect_colrchange:170.0
+preheat_power:470
+preheat_nominal_temperature:240.0
+preheat_min_power_offset:10
+preheat_min_time:20.0
+preheat_max_time:60.0
+preheat_check_gradient_time:30.0
+preheat_target_in_future:30.0
+preheat_mode:5
+preheat_end_detection_count:5
+preheat_temperature_proximity:8.5
+roast_required_power:1200
+roast_min_desired_rate_of_rise:0.1
+roast_target_in_future:25.0
+roast_use_prediction_method:1
+roast_target_timeshift:1.0
+roast_end_by_time_ratio:1
+roast_PID_Kp:0.7172
+roast_PID_Ki:0
+roast_PID_Kd:3.55
+roast_PID_min_i:0
+roast_PID_max_i:0
+roast_PID_iLimitApplyAtZero:1
+roast_PID_differentialOnError:1
+specific_heat_adj_upper_temperature_limit:180.0
+specific_heat_adj_lower_temperature_limit:80.0
+specific_heat_adj_multiplier_Kp:2.1
+specific_heat_adj_multiplier_Kd:4
+zone1_time_start:0.0
+zone1_time_end:0.0
+zone1_multiplier_Kp:1
+zone1_multiplier_Kd:1
+zone1_boost:3.0
+zone2_time_start:400.0
+zone2_time_end:440.0
+zone2_multiplier_Kp:1
+zone2_multiplier_Kd:1
+zone2_boost:3.0
+corner1_time_start:0.0
+corner1_time_end:0.0
+cooldown_hi_speed:17000
+cooldown_lo_speed:15000
+cooldown_lo_temperature:100.0
+roast_levels:205.0,210.0,215.0,220.0,223.0,224.0,225.0
+profile_modified:10/03/2025 11:05:04 UTC
+roast_profile:0.0,20.0,0,0.0,52.8519116855,69.7,140.7,111.6,72.8842218632,49.3,191.464790803,158.2,300.2,191.4,262.295128121,183.3,370.923392596,206.4,488.5,213.7,392.091732809,208.4,534.266603639,216.2,630.9,221.6,585.138002435,219.0,0,0.0
+fan_profile:0.0,15000.0,0,0.0,22.247189743,14999.0352871,29.0208422596,15000.0,17.9362834962,14998.9807237,325.571692263,15027.2692192,360.134454116,14200.0,281.40164071,14173.3844232,397.635021811,14212.6770427,481.040774456,14967.242636,372.220205763,14969.3107908,0,0.0
