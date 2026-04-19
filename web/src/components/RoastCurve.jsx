@@ -64,6 +64,10 @@ export default function RoastCurve({ klogName }) {
   if (state.status === 'error')
     return <div className="empty"><div className="empty-icon">⚠️</div>曲线数据加载失败</div>
 
+  // idle 或 data 未就绪时显示加载中，避免访问 null.length 崩溃
+  if (!state.data)
+    return <div className="loading">加载中…</div>
+
   const { data, meta, fc } = state
   const totalTime = data[data.length - 1]?.time || 0
   const endTemp = data[data.length - 1]?.豆温 || 0

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import RoastLogTable from './components/RoastLogTable.jsx'
 import RoastCurve from './components/RoastCurve.jsx'
 import MarkdownPanel from './components/MarkdownPanel.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { loadManifest, loadRoastLog } from './utils/dataLoader.js'
 
 // 豆子配置
@@ -165,7 +166,9 @@ export default function App() {
                   </select>
                 </div>
               )}
-              <RoastCurve klogName={selectedKlog} />
+              <ErrorBoundary>
+                <RoastCurve klogName={selectedKlog} />
+              </ErrorBoundary>
             </>
           )}
 
