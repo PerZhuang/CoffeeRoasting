@@ -2,9 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import RoastLogTable from './components/RoastLogTable.jsx'
 import RoastCurve from './components/RoastCurve.jsx'
 import MarkdownPanel from './components/MarkdownPanel.jsx'
-import {
-  loadManifest, loadRoastLog, loadBeanCard, loadCupping, loadAnalysis
-} from './utils/dataLoader.js'
+import { loadManifest, loadRoastLog } from './utils/dataLoader.js'
 
 // 豆子配置
 const BEANS = [
@@ -36,7 +34,18 @@ export default function App() {
 
   useEffect(() => {
     Promise.all([loadManifest(), loadRoastLog()])
-      .then(([mf, rows]) => { setManifest(mf); setRoasts(rows); setLoading(false) })
+      .then(([mf, rows]) => {
+        setManifest(mf)
+        setRoasts(rows)
+        // 默认选中最新一条 klog
+        if (mf?.klogs?.length) {
+          setSelectedKlog(mf.klogs[mf.klogs.length - 1])
+        }
+        // 默认选中最新杯测和分析
+        if (mf?.cupping?.length)  setSelectedCupping(mf.cupping[mf.cupping.length - 1])
+        if (mf?.analysis?.length) setSelectedAnalysis(mf.analysis[mf.analysis.length - 1])
+        setLoading(false)
+      })
       .catch(e => { console.error(e); setLoading(false) })
   }, [])
 
@@ -61,23 +70,9 @@ export default function App() {
     }
   }, [manifest])
 
-  // 生豆卡 loader
-  const beanCardLoader = useCallback(() => {
-    if (!bean.card) return null
-    return () => loadBeanCard(bean.card)
-  }, [bean])
-
-  // 杯测 loader
-  const cuppingLoader = useCallback(() => {
-    if (!selectedCupping) return null
-    return () => loadCupping(selectedCupping)
-  }, [selectedCupping])
-
-  // 分析 loader
-  const analysisLoader = useCallback(() => {
-    if (!selectedAnalysis) return null
-    return () => loadAnalysis(selectedAnalysis)
-  }, [selectedAnalysis])
+  const beanCardSrc  = bean.card ? `01_green_beans/${bean.card}.md` : null
+  const cuppingSrc   = selectedCupping  ? `05_cupping/${selectedCupping}.md`  : null
+  const analysisSrc  = selectedAnalysis ? `04_analysis/${selectedAnalysis}.md` : null
 
   if (loading) return <div className="loading" style={{ marginTop: 80, fontSize: 16 }}>☕ 加载数据中…</div>
 
@@ -192,7 +187,7 @@ export default function App() {
                 </div>
               )}
               <MarkdownPanel
-                loader={bean.card ? beanCardLoader() : null}
+                src={beanCardSrc}
                 placeholder="请从左侧选择具体豆子"
               />
             </>
@@ -215,7 +210,7 @@ export default function App() {
                   ))}
                 </div>
               )}
-              <MarkdownPanel loader={cuppingLoader()} placeholder="请从上方选择杯测记录" />
+              <MarkdownPanel src={cuppingSrc} placeholder="请从上方选择杯测记录" />
             </>
           )}
 
@@ -236,7 +231,7 @@ export default function App() {
                   ))}
                 </div>
               )}
-              <MarkdownPanel loader={analysisLoader()} placeholder="请从上方选择分析报告" />
+              <MarkdownPanel src={analysisSrc} placeholder="请从上方选择分析报告" />
             </>
           )}
 
