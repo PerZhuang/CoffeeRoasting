@@ -24,7 +24,7 @@ export default function MarkdownPanel({ src, placeholder = '请选择文件' }) 
     return <div className="loading">加载中…</div>
 
   return (
-    <div className="card">
+    <div className="md-wrap">
       <div className="markdown">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{content || ''}</ReactMarkdown>
       </div>
