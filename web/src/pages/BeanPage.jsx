@@ -28,7 +28,7 @@ function ScoreColor(s) {
 }
 
 export default function BeanPage({
-  beanId, beanName, beanCardFile,
+  beanId, beanName, beanCardFile, klogOffset = 69,
   roasts, klogs, cuppingFiles, analysisFiles,
   onBack,
 }) {
@@ -40,11 +40,11 @@ export default function BeanPage({
 
   const handleSelectRow = useCallback((row) => {
     setSelectedRow(row)
-    const logNum    = parseInt(row.roast_id) + 69
+    const logNum    = parseInt(row.roast_id) + klogOffset
     const candidate = `log${String(logNum).padStart(4, '0')}`
     setSelectedKlog(klogs?.includes(candidate) ? candidate : klogs?.[klogs.length - 1])
     setTab('curve')
-  }, [klogs])
+  }, [klogs, klogOffset])
 
   // 当前选中行
   const row = selectedRow ?? roasts[roasts.length - 1]
@@ -89,7 +89,7 @@ export default function BeanPage({
               <div className="brl-header">炉次 · {roasts.length}</div>
               <div className="brl-scroll">
                 {[...roasts].reverse().map(r => {
-                  const logNum    = parseInt(r.roast_id) + 69
+                  const logNum    = parseInt(r.roast_id) + klogOffset
                   const klog      = `log${String(logNum).padStart(4, '0')}`
                   const isActive  = selectedKlog === klog
                   const hasKlog   = klogs?.includes(klog)
@@ -161,7 +161,7 @@ export default function BeanPage({
                     </thead>
                     <tbody>
                       {[...roasts].reverse().map(r => {
-                        const logNum = parseInt(r.roast_id) + 69
+                        const logNum = parseInt(r.roast_id) + klogOffset
                         const klog   = `log${String(logNum).padStart(4, '0')}`
                         return (
                           <tr key={r.roast_id}

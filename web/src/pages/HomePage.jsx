@@ -17,6 +17,13 @@ const BEAN_VISUALS = {
     flag: '🌋',
     CoverArt: PanamaArt,
   },
+  ethiopia_hambela_washed: {
+    gradient: 'linear-gradient(145deg, #040d1a 0%, #091728 45%, #0d2240 100%)',
+    accent: '#60a5fa',
+    label: '埃塞俄比亚 · 罕贝拉',
+    flag: '☁️',
+    CoverArt: EthiopiaArt,
+  },
 }
 
 const FALLBACK_VISUAL = {
@@ -69,6 +76,36 @@ function PanamaArt() {
       {[30,70,110,200,250,290].map((x,i) => (
         <line key={i} x1={x} y1="155" x2={x + (i%2?3:-3)} y2="140"
           stroke="rgba(240,160,48,0.2)" strokeWidth="1.5" strokeLinecap="round"/>
+      ))}
+    </svg>
+  )
+}
+
+function EthiopiaArt() {
+  return (
+    <svg viewBox="0 0 320 160" fill="none" preserveAspectRatio="xMidYMid slice"
+      style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
+      {/* 高原梯田层次 */}
+      <path d="M-10 160 L-10 120 Q40 108 80 115 Q130 122 180 105 Q230 88 280 98 Q310 104 340 96 L340 160Z"
+        fill="rgba(96,165,250,0.06)" />
+      <path d="M-10 160 L-10 132 Q50 118 100 126 Q150 134 200 118 Q250 102 300 112 L340 108 L340 160Z"
+        fill="rgba(96,165,250,0.04)" />
+      <path d="M-10 160 L-10 144 Q60 130 120 138 Q170 144 220 130 Q270 116 320 124 L340 122 L340 160Z"
+        fill="rgba(96,165,250,0.03)" />
+      {/* 流水曲线 */}
+      <path d="M0 90 Q50 82 90 88 Q130 94 160 80 Q200 64 250 74 Q290 82 340 70"
+        stroke="rgba(96,165,250,0.18)" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+      <path d="M0 108 Q60 98 110 104 Q160 110 200 96 Q240 82 290 90 Q315 94 340 86"
+        stroke="rgba(96,165,250,0.12)" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      {/* 云雾/晨雾散点 */}
+      {[20,55,95,140,185,230,270,305].map((x,i) => (
+        <ellipse key={i} cx={x} cy={40 + (i%3)*12} rx={8+(i%2)*4} ry="3"
+          fill="rgba(96,165,250,0.06)" />
+      ))}
+      {/* 星点装饰（高海拔星空） */}
+      {[30,80,120,165,210,255,295].map((x,i) => (
+        <circle key={i} cx={x} cy={20 + (i%4)*8} r="0.8"
+          fill="rgba(96,165,250,0.35)" />
       ))}
     </svg>
   )

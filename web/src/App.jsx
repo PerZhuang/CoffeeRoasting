@@ -13,6 +13,7 @@ const BEANS = [
     altitude:    '1650m',
     filterKey:   'Catimor',
     cardFile:    'yunnan_puer_catimor_nat',
+    klogOffset:  69,  // roast_id + offset = klog number
     /* 杯测/分析文件名关键词过滤 */
     cuppingKey:  'yunnan',
     analysisKey: null,  // null = 全部
@@ -25,6 +26,19 @@ const BEANS = [
     altitude:    '1525–1600m',
     filterKey:   'Catuai',
     cardFile:    'panama_aurora_catuai_nat',
+    klogOffset:  69,
+    cuppingKey:  null,
+    analysisKey: null,
+  },
+  {
+    id:          'ethiopia_hambela_washed',
+    name:        '埃塞俄比亚罕贝拉',
+    variety:     'Heirloom',
+    process:     '水洗',
+    altitude:    '1900–2300m',
+    filterKey:   'Hambela',
+    cardFile:    'ethiopia_hambela_washed',
+    klogOffset:  76,
     cuppingKey:  null,
     analysisKey: null,
   },
@@ -92,8 +106,12 @@ export default function App() {
     r.green_bean?.toLowerCase().includes(bean.filterKey.toLowerCase())
   )
 
-  // 过滤出该豆子相关的 klog（按时间 + 豆子匹配，暂时用全部）
-  const beanKlogs = manifest?.klogs ?? []
+  // 过滤出该豆子相关的 klog（按 roast_id + offset 精确匹配）
+  const allKlogs = manifest?.klogs ?? []
+  const beanKlogSet = new Set(
+    beanRoasts.map(r => `log${String(parseInt(r.roast_id) + bean.klogOffset).padStart(4, '0')}`)
+  )
+  const beanKlogs = allKlogs.filter(k => beanKlogSet.has(k))
 
   // 杯测文件过滤
   const cuppingFiles = (manifest?.cupping ?? []).filter(f =>
@@ -110,6 +128,7 @@ export default function App() {
       beanId={bean.id}
       beanName={bean.name}
       beanCardFile={bean.cardFile}
+      klogOffset={bean.klogOffset}
       roasts={beanRoasts}
       klogs={beanKlogs}
       cuppingFiles={cuppingFiles}

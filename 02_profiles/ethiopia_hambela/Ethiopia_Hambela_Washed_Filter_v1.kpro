@@ -1,0 +1,54 @@
+profile_short_name:ETH Hambela WSH v1
+profile_designer:Custom Profile
+profile_description:Ethiopia Hambela Washed Heirloom 1900-2300m\vMoisture: 11.2% | Density: 892g/L\vSuggested load: 120g\v\vVersion 1 - Based on Kaffelogic official F-WSH 2000-2700\v(SeanBrews v2.3) as primary template.\v\vAdjustments from official template:\v- Preheat 790->800W for higher moisture (11.2%) and\v  high density (892g/L)\v- expect_colrchange set to 170C (from X-CLAB Ethiopia)\v- Cooldown 17000/16000/90C (validated on Catuai v5)\v- Roast levels narrowed for light-to-medium-light range\v\vAll other parameters kept identical to the official\vF-WSH 2000-2700 template. No Zone control. Schema 1.4.\v\vExpected FC: ~204C (official 204, X-CLAB 204.5)\v\vRecommended Levels:\v\vClean & Bright: Level 2.0 (~207C, ~14% dev)\vSweet & Balanced: Level 3.0 (~209C, ~16% dev)\vMedium Light: Level 4.0 (~211C, ~18% dev)\v\vC40 pour-over grind: 24-28 clicks\vResting period: 7-14 days\v
+profile_schema_version:1.4
+emulation_mode:0.0
+recommended_level:2.0
+expect_fc:204.0
+expect_colrchange:170.0
+preheat_power:800.0
+preheat_nominal_temperature:240.0
+preheat_min_power_offset:10.0
+preheat_min_time:20.0
+preheat_max_time:60.0
+preheat_check_gradient_time:30.0
+preheat_target_in_future:30.0
+preheat_mode:5.0
+preheat_end_detection_count:5.0
+preheat_temperature_proximity:8.5
+roast_required_power:1200.0
+roast_min_desired_rate_of_rise:0.4
+roast_target_in_future:25.0
+roast_use_prediction_method:1.0
+roast_target_timeshift:1.0
+roast_end_by_time_ratio:0.75
+roast_PID_Kp:0.717
+roast_PID_Ki:0.0
+roast_PID_Kd:3.55
+roast_PID_min_i:0.0
+roast_PID_max_i:0.0
+roast_PID_iLimitApplyAtZero:1.0
+roast_PID_differentialOnError:1.0
+specific_heat_adj_upper_temperature_limit:180.0
+specific_heat_adj_lower_temperature_limit:80.0
+specific_heat_adj_multiplier_Kp:2.1
+specific_heat_adj_multiplier_Kd:4.0
+zone1_time_start:0.0
+zone1_time_end:0.0
+zone1_multiplier_Kp:1.0
+zone1_multiplier_Kd:1.0
+zone1_boost:0
+zone2_time_start:0.0
+zone2_time_end:0.0
+zone2_multiplier_Kp:1.0
+zone2_multiplier_Kd:1.0
+zone2_boost:0
+corner1_time_start:0.0
+corner1_time_end:0.0
+cooldown_hi_speed:17000.0
+cooldown_lo_speed:16000.0
+cooldown_lo_temperature:90.0
+roast_levels:205.0,207.0,209.0,211.0,213.0,215.0,217.0
+profile_modified:29/03/2026 00:00:00 UTC
+roast_profile:0.0,20.0,0,0.0,42.5388329248,76.4,185.468786269,164.4,102.658944686,137.1,304.015673701,203.5,599.692387569,220.4,480.455003169,217.6,0,0.0
+fan_profile:0.0,14700.0,0,0.0,18.0,14700.0,60.0,14700.0,42.0000157908,14700.2384255,244.225438755,14697.5597732,380.0,14100.216909,355.329610105,14262.8618478,452.906300886,13619.5661819,600.0,13200.0,582.003,13200.0,0,0.0
