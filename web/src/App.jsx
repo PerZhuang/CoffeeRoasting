@@ -3,7 +3,12 @@ import HomePage from './pages/HomePage.jsx'
 import BeanPage from './pages/BeanPage.jsx'
 import { loadManifest, loadRoastLog } from './utils/dataLoader.js'
 
-/* 豆种静态定义 — 新增豆种时在此追加 */
+/* 豆种静态定义 — 新增豆种时在此追加
+ *
+ * cuppingFilter / analysisFilter: (filename: string) => boolean
+ *   精确控制哪些文件属于该豆种，避免多豆种数据混淆
+ *   文件名不含扩展名，例如 "cupping_007_yunnan_v1"
+ */
 const BEANS = [
   {
     id:          'yunnan_puer_catimor_nat',
@@ -13,10 +18,11 @@ const BEANS = [
     altitude:    '1650m',
     filterKey:   'Catimor',
     cardFile:    'yunnan_puer_catimor_nat',
-    klogOffset:  69,  // roast_id + offset = klog number
-    /* 杯测/分析文件名关键词过滤 */
-    cuppingKey:  'yunnan',
-    analysisKey: null,  // null = 全部
+    klogOffset:  69,
+    // 杯测：含 'yunnan' 的文件（cupping_007_yunnan_v1 … cupping_012_yunnan_v5）
+    cuppingFilter: f => f.includes('yunnan'),
+    // 分析：log0077–log0083（Yunnan roast_id 8–14，offset 69）
+    analysisFilter: f => /log00(7[7-9]|8[0-3])/.test(f),
   },
   {
     id:          'panama_aurora_catuai_nat',
@@ -27,8 +33,10 @@ const BEANS = [
     filterKey:   'Catuai',
     cardFile:    'panama_aurora_catuai_nat',
     klogOffset:  69,
-    cuppingKey:  null,
-    analysisKey: null,
+    // 杯测：不含 'yunnan' 的文件（cupping_004_v4, 005_v5, 006_reroast）
+    cuppingFilter: f => !f.includes('yunnan'),
+    // 分析：log0072–log0076（Panama roast_ids 3–6 + reroast，offset 69）
+    analysisFilter: f => /log007[2-6]/.test(f),
   },
   {
     id:          'ethiopia_hambela_washed',
@@ -39,8 +47,10 @@ const BEANS = [
     filterKey:   'Hambela',
     cardFile:    'ethiopia_hambela_washed',
     klogOffset:  76,
-    cuppingKey:  null,
-    analysisKey: null,
+    // 杯测：含 'eth' 或 'hambela' 的文件（当前暂无）
+    cuppingFilter: f => /eth|hambela/i.test(f),
+    // 分析：log009xxxx（Ethiopia roast_ids 16–22，offset 76 → log0092–0098）
+    analysisFilter: f => /log009/.test(f),
   },
 ]
 
@@ -113,15 +123,15 @@ export default function App() {
   )
   const beanKlogs = allKlogs.filter(k => beanKlogSet.has(k))
 
-  // 杯测文件过滤
-  const cuppingFiles = (manifest?.cupping ?? []).filter(f =>
-    !bean.cuppingKey || f.includes(bean.cuppingKey)
-  )
+  // 杯测文件过滤（使用精确函数过滤，避免多豆种混淆）
+  const cuppingFiles = bean.cuppingFilter
+    ? (manifest?.cupping ?? []).filter(bean.cuppingFilter)
+    : []
 
   // 分析文件过滤
-  const analysisFiles = (manifest?.analysis ?? []).filter(f =>
-    !bean.analysisKey || f.includes(bean.analysisKey)
-  )
+  const analysisFiles = bean.analysisFilter
+    ? (manifest?.analysis ?? []).filter(bean.analysisFilter)
+    : []
 
   return (
     <BeanPage

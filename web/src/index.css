@@ -294,7 +294,9 @@ body {
    Home Page
 ════════════════════════════════════════ */
 .home-page {
-  height: 100vh; background: var(--bg);
+  height: 100vh;
+  height: 100dvh; /* iOS Safari dynamic viewport */
+  background: var(--bg);
   display: flex; flex-direction: column;
   overflow-y: auto; /* enables mouse-wheel + touch scroll */
   -webkit-overflow-scrolling: touch;
@@ -381,7 +383,9 @@ body {
    Bean Detail Page
 ════════════════════════════════════════ */
 .bean-page {
-  height: 100vh; overflow: hidden; /* lock viewport, internal areas scroll */
+  height: 100vh;
+  height: 100dvh; /* iOS Safari: excludes browser chrome */
+  overflow: hidden; /* lock viewport, internal areas scroll */
   display: flex; flex-direction: column; background: var(--bg);
 }
 
@@ -415,10 +419,10 @@ body {
 .bean-tab-btn:hover { color: var(--text2); }
 .bean-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
 
-.bean-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+.bean-content { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
 
 /* Split: roast list + main area */
-.bean-split { display: flex; flex: 1; overflow: hidden; }
+.bean-split { display: flex; flex: 1; min-height: 0; overflow: hidden; }
 .bean-split-file { display: flex; flex: 1; overflow: hidden; padding: 20px; gap: 16px; }
 
 .bean-roast-list {
@@ -445,11 +449,11 @@ body {
 .brl-id { font-size: 13px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
 .brl-item-sub { font-size: 11px; color: var(--text2); display: flex; gap: 5px; }
 
-.bean-main { flex: 1; overflow-y: auto; padding: 16px 20px; }
+.bean-main { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 20px; }
 .bean-main::-webkit-scrollbar { width: 3px; }
 .bean-main::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-.bean-full-content { flex: 1; overflow-y: auto; padding: 20px 28px; }
+.bean-full-content { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 28px; }
 .bean-full-content::-webkit-scrollbar { width: 3px; }
 .bean-full-content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
@@ -604,6 +608,19 @@ body {
   }
   .file-sidebar::-webkit-scrollbar { display: none; }
   .file-item { flex-shrink: 0; white-space: nowrap; padding: 7px 12px; }
+
+  /* ── Curve card header: stack vertically on narrow screens ── */
+  .curve-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 12px 0;
+    gap: 6px;
+  }
+  .curve-legend { margin-left: 0; gap: 10px; }
+  .fc-badge { align-self: flex-start; font-size: 10px; padding: 2px 8px; }
+
+  /* ── bean-split-file inside bean-page (not float) ── */
+  .bean-split-file { overflow-y: auto; min-height: 0; }
 
   /* ── Markdown ── */
   .md-wrap { padding: 16px 18px; }
