@@ -1,7 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:          #0d0b10;
+  --bg:          #000000;
   --panel:       #141218;
   --card:        #1c1922;
   --card2:       #221f2a;
@@ -486,3 +486,166 @@ body {
   .bean-grid { grid-template-columns: 1fr; padding: 0 16px 32px; }
   .home-hero { padding: 32px 16px 20px; }
 }
+
+/* ════════════════════════════════════════
+   NX Home — Netflix × Spotify redesign
+════════════════════════════════════════ */
+
+.nx-home {
+  height: 100vh; overflow-y: auto;
+  background: #000; color: #fff;
+  font-family: -apple-system, 'PingFang SC', sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+.nx-home::-webkit-scrollbar { width: 4px; }
+.nx-home::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+/* ── Nav ── */
+.nx-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+  padding: 20px 56px; display: flex; align-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+}
+.nx-nav-brand { display: flex; align-items: center; gap: 8px; }
+.nx-nav-wordmark { font-size: 18px; font-weight: 900; letter-spacing: -.02em; color: #fff; }
+.nx-nav-links { display: flex; gap: 24px; margin-left: 40px; font-size: 13px; font-weight: 500; }
+.nx-nav-link { color: #b3b3b3; cursor: pointer; }
+.nx-nav-link-active { color: #fff; }
+.nx-nav-right { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+.nx-avatar {
+  width: 30px; height: 30px; border-radius: 6px;
+  background: #1ed760; display: flex; align-items: center;
+  justify-content: center; color: #000; font-weight: 800; font-size: 13px;
+}
+
+/* ── Hero ── */
+.nx-hero { position: relative; height: 560px; overflow: hidden; }
+.nx-hero-bg { position: absolute; inset: 0; }
+.nx-hero-fade-h {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, transparent 80%);
+}
+.nx-hero-fade-v {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, #000 100%);
+}
+.nx-hero-content { position: relative; z-index: 2; padding: 160px 56px 0; max-width: 720px; }
+.nx-hero-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 900; color: #1ed760;
+  letter-spacing: .22em; margin-bottom: 14px; text-transform: uppercase;
+}
+.nx-hero-title {
+  font-size: 58px; font-weight: 900; letter-spacing: -.035em;
+  line-height: 1.0; margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.nx-hero-meta {
+  display: flex; gap: 14px; margin-top: 20px;
+  font-size: 13px; color: #b3b3b3; align-items: center; flex-wrap: wrap;
+}
+.nx-hero-score { color: #1ed760; font-weight: 700; font-variant-numeric: tabular-nums; }
+.nx-sep { color: #737373; }
+.nx-chip-outline {
+  border: 1px solid #737373; padding: 1px 6px;
+  border-radius: 2px; font-size: 11px; font-variant-numeric: tabular-nums;
+}
+.nx-hero-desc {
+  font-size: 16px; color: #fff; margin-top: 20px; line-height: 1.65;
+  max-width: 560px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.nx-hero-actions { display: flex; gap: 10px; margin-top: 28px; }
+.nx-btn-primary {
+  background: #fff; color: #000; border: none;
+  padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: background .15s;
+}
+.nx-btn-primary:hover { background: rgba(255,255,255,0.85); }
+
+/* ── Sections ── */
+.nx-section { position: relative; z-index: 3; }
+.nx-best-section { margin-top: -40px; padding-bottom: 8px; }
+.nx-library-section { padding: 40px 0 80px; }
+.nx-section-header { padding: 0 56px 18px; display: flex; align-items: baseline; gap: 12px; }
+.nx-section-title { font-size: 24px; font-weight: 800; letter-spacing: -.015em; margin: 0; }
+.nx-section-sub { font-size: 13px; color: #737373; }
+
+/* ── Poster rail ── */
+.nx-poster-rail {
+  padding: 0 56px 6px; display: flex; gap: 14px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nx-poster-rail::-webkit-scrollbar { display: none; }
+
+/* ── Poster card (200×300) ── */
+.nx-poster-card {
+  flex-shrink: 0; width: 200px; height: 300px; position: relative;
+  border-radius: 8px; overflow: hidden; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s;
+}
+.nx-poster-bg { position: absolute; inset: 0; }
+.nx-poster-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.95) 100%);
+}
+.nx-poster-rank {
+  position: absolute; top: 8px; left: 10px;
+  font-size: 96px; font-weight: 900; color: rgba(0,0,0,0.55);
+  line-height: 0.9; font-variant-numeric: tabular-nums; letter-spacing: -.05em;
+}
+.nx-poster-score {
+  position: absolute; top: 14px; right: 12px;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  padding: 4px 9px; border-radius: 3px;
+  font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.nx-poster-origin {
+  position: absolute; top: 130px; left: 12px;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
+  padding: 3px 8px; border-radius: 99px;
+  font-size: 10px; font-weight: 700; letter-spacing: .05em;
+}
+.nx-poster-bottom { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 14px 16px; }
+.nx-poster-name { font-size: 16px; font-weight: 800; letter-spacing: -.01em; line-height: 1.2; }
+.nx-poster-tagline { font-size: 11px; font-style: italic; margin-top: 6px; line-height: 1.4; }
+.nx-poster-stats { font-size: 10px; color: #737373; margin-top: 8px; font-variant-numeric: tabular-nums; }
+
+/* ── Bean grid ── */
+.nx-bean-grid {
+  padding: 0 56px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;
+}
+
+/* ── Bean card (full-width × 180) ── */
+.nx-bean-card {
+  width: 100%; height: 180px; position: relative;
+  border-radius: 8px; overflow: hidden; cursor: pointer;
+  transition: transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s;
+}
+.nx-bean-card-bg { position: absolute; inset: 0; }
+.nx-bean-card-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.92) 100%);
+}
+.nx-bean-tag {
+  position: absolute; top: 14px; left: 14px;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);
+  padding: 4px 9px; border-radius: 3px; border: 1px solid;
+  display: flex; align-items: center; gap: 5px;
+}
+.nx-bean-score {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  padding: 4px 10px; border-radius: 3px;
+  font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.nx-bean-bottom { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 18px 18px; }
+.nx-bean-name { font-size: 19px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 4px; }
+.nx-bean-meta { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+.nx-bean-tagline { font-size: 12px; font-style: italic; margin-bottom: 10px; }
+.nx-bean-stats { display: flex; gap: 14px; font-size: 11px; color: #b3b3b3; font-variant-numeric: tabular-nums; }
+.nx-sep3 { color: #737373; }

@@ -1,224 +1,200 @@
-import React from 'react'
-import { LogoFull } from '../components/Logo.jsx'
+import React, { useState } from 'react'
+import { beanPoster, FALLBACK_POSTER } from '../config/beanVisuals.js'
+import OriginArt from '../components/icons/OriginArt.jsx'
+import OriginIcon from '../components/icons/OriginIcon.jsx'
+import V60Icon from '../components/icons/V60Icon.jsx'
 
-/* ── 每款豆子的视觉配置 ── */
-const BEAN_VISUALS = {
-  yunnan_puer_catimor_nat: {
-    gradient: 'linear-gradient(145deg, #071a0e 0%, #0f2d18 45%, #183d22 100%)',
-    accent: '#34d399',
-    label: '中国 · 云南',
-    flag: '🌿',
-    CoverArt: YunnanArt,
-  },
-  panama_aurora_catuai_nat: {
-    gradient: 'linear-gradient(145deg, #1a0c00 0%, #3b1f00 45%, #522c00 100%)',
-    accent: '#f0a030',
-    label: '巴拿马 · 火山',
-    flag: '🌋',
-    CoverArt: PanamaArt,
-  },
-  ethiopia_hambela_washed: {
-    gradient: 'linear-gradient(145deg, #040d1a 0%, #091728 45%, #0d2240 100%)',
-    accent: '#60a5fa',
-    label: '埃塞俄比亚 · 罕贝拉',
-    flag: '☁️',
-    CoverArt: EthiopiaArt,
-  },
-}
+export default function HomePage({ roasts, beans, onSelectBean }) {
+  const [hoveredId, setHoveredId] = useState(null)
 
-const FALLBACK_VISUAL = {
-  gradient: 'linear-gradient(145deg, #0f0d18 0%, #1e1830 100%)',
-  accent: '#60a5fa',
-  label: '产区未知',
-  flag: '☕',
-  CoverArt: DefaultArt,
-}
+  const beanStats = beans.map(b => {
+    const rows = roasts.filter(r =>
+      r.green_bean?.toLowerCase().includes(b.filterKey.toLowerCase())
+    )
+    const scores = rows.map(r => parseFloat(r.cupping_score)).filter(n => !isNaN(n) && n > 0)
+    const best = scores.length ? Math.max(...scores) : null
+    const versionSet = [...new Set(rows.map(r => r.profile_version).filter(Boolean))]
+    const versions = versionSet.length ? `v1–v${versionSet.length}` : '—'
+    const bestRow = best ? rows.find(r => parseFloat(r.cupping_score) === best) : null
+    const bestDevPct = bestRow?.dev_pct || null
+    const vis = beanPoster[b.id] || FALLBACK_POSTER
+    return { ...b, count: rows.length, best, versions, bestDevPct, vis }
+  })
 
-/* ── 封面抽象艺术 ── */
-function YunnanArt() {
-  return (
-    <svg viewBox="0 0 320 160" fill="none" preserveAspectRatio="xMidYMid slice"
-      style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
-      {/* 层叠山脉剪影 */}
-      <path d="M-10 160 L40 100 L80 125 L130 65 L175 95 L220 40 L265 75 L310 30 L340 55 L340 160Z"
-        fill="rgba(52,211,153,0.07)" />
-      <path d="M-10 160 L30 120 L75 140 L120 85 L165 108 L210 55 L255 90 L300 45 L340 72 L340 160Z"
-        fill="rgba(52,211,153,0.05)" />
-      <path d="M-10 160 L20 135 L70 150 L115 100 L155 120 L200 75 L250 105 L295 65 L340 88 L340 160Z"
-        fill="rgba(52,211,153,0.04)" />
-      {/* 等高线 */}
-      <ellipse cx="190" cy="55" rx="90" ry="28" stroke="rgba(52,211,153,0.12)" strokeWidth="1" fill="none"/>
-      <ellipse cx="190" cy="55" rx="60" ry="18" stroke="rgba(52,211,153,0.1)" strokeWidth="1" fill="none"/>
-      <ellipse cx="190" cy="55" rx="32" ry="10" stroke="rgba(52,211,153,0.09)" strokeWidth="1" fill="none"/>
-      {/* 散点装饰 */}
-      {[60,90,130,170,220,260,300].map((x,i) => (
-        <circle key={i} cx={x} cy={145 - (i%3)*8} r="1.5"
-          fill="rgba(52,211,153,0.25)" />
-      ))}
-    </svg>
-  )
-}
+  const featured = [...beanStats]
+    .filter(b => b.best !== null)
+    .sort((a, b) => b.best - a.best)[0] ?? beanStats[0]
 
-function PanamaArt() {
-  return (
-    <svg viewBox="0 0 320 160" fill="none" preserveAspectRatio="xMidYMid slice"
-      style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
-      {/* 火山锥轮廓 */}
-      <path d="M160 20 L240 160 L80 160Z" fill="rgba(240,160,48,0.06)" />
-      <path d="M160 35 L225 160 L95 160Z" fill="rgba(240,160,48,0.05)" />
-      {/* 等高线（同心椭圆） */}
-      <ellipse cx="160" cy="105" rx="120" ry="40" stroke="rgba(240,160,48,0.1)" strokeWidth="1" fill="none"/>
-      <ellipse cx="160" cy="90"  rx="90"  ry="30" stroke="rgba(240,160,48,0.1)" strokeWidth="1" fill="none"/>
-      <ellipse cx="160" cy="76"  rx="62"  ry="21" stroke="rgba(240,160,48,0.09)" strokeWidth="1" fill="none"/>
-      <ellipse cx="160" cy="64"  rx="38"  ry="13" stroke="rgba(240,160,48,0.08)" strokeWidth="1" fill="none"/>
-      <ellipse cx="160" cy="52"  rx="18"  ry="7"  stroke="rgba(240,160,48,0.08)" strokeWidth="1" fill="none"/>
-      {/* 热带植被点 */}
-      {[30,70,110,200,250,290].map((x,i) => (
-        <line key={i} x1={x} y1="155" x2={x + (i%2?3:-3)} y2="140"
-          stroke="rgba(240,160,48,0.2)" strokeWidth="1.5" strokeLinecap="round"/>
-      ))}
-    </svg>
-  )
-}
+  const topBeans = [...beanStats]
+    .filter(b => b.best !== null)
+    .sort((a, b) => b.best - a.best)
+    .slice(0, 5)
 
-function EthiopiaArt() {
-  return (
-    <svg viewBox="0 0 320 160" fill="none" preserveAspectRatio="xMidYMid slice"
-      style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
-      {/* 高原梯田层次 */}
-      <path d="M-10 160 L-10 120 Q40 108 80 115 Q130 122 180 105 Q230 88 280 98 Q310 104 340 96 L340 160Z"
-        fill="rgba(96,165,250,0.06)" />
-      <path d="M-10 160 L-10 132 Q50 118 100 126 Q150 134 200 118 Q250 102 300 112 L340 108 L340 160Z"
-        fill="rgba(96,165,250,0.04)" />
-      <path d="M-10 160 L-10 144 Q60 130 120 138 Q170 144 220 130 Q270 116 320 124 L340 122 L340 160Z"
-        fill="rgba(96,165,250,0.03)" />
-      {/* 流水曲线 */}
-      <path d="M0 90 Q50 82 90 88 Q130 94 160 80 Q200 64 250 74 Q290 82 340 70"
-        stroke="rgba(96,165,250,0.18)" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-      <path d="M0 108 Q60 98 110 104 Q160 110 200 96 Q240 82 290 90 Q315 94 340 86"
-        stroke="rgba(96,165,250,0.12)" strokeWidth="1" strokeLinecap="round" fill="none"/>
-      {/* 云雾/晨雾散点 */}
-      {[20,55,95,140,185,230,270,305].map((x,i) => (
-        <ellipse key={i} cx={x} cy={40 + (i%3)*12} rx={8+(i%2)*4} ry="3"
-          fill="rgba(96,165,250,0.06)" />
-      ))}
-      {/* 星点装饰（高海拔星空） */}
-      {[30,80,120,165,210,255,295].map((x,i) => (
-        <circle key={i} cx={x} cy={20 + (i%4)*8} r="0.8"
-          fill="rgba(96,165,250,0.35)" />
-      ))}
-    </svg>
-  )
-}
-
-function DefaultArt() {
-  return (
-    <svg viewBox="0 0 320 160" fill="none"
-      style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}>
-      <circle cx="160" cy="80" r="60" stroke="rgba(96,165,250,0.1)" strokeWidth="1"/>
-      <circle cx="160" cy="80" r="40" stroke="rgba(96,165,250,0.08)" strokeWidth="1"/>
-      <circle cx="160" cy="80" r="20" stroke="rgba(96,165,250,0.06)" strokeWidth="1"/>
-    </svg>
-  )
-}
-
-/* ── 单张生豆卡片 ── */
-function BeanCard({ id, name, variety, process, altitude, roastCount, bestScore, versions, visual, onClick }) {
-  const { gradient, accent, label, flag, CoverArt } = visual
+  const fv = featured?.vis ?? FALLBACK_POSTER
 
   return (
-    <div className="bean-card" onClick={onClick}
-      style={{ '--card-accent': accent }}>
-      {/* 封面 */}
-      <div className="bean-card-cover" style={{ background: gradient }}>
-        <CoverArt />
-        <div className="bean-card-cover-meta">
-          <span className="bean-card-flag">{flag}</span>
-          <span className="bean-card-region">{label}</span>
-        </div>
-        <div className="bean-card-cover-altitude">
-          <span>{altitude}</span>
+    <div className="nx-home">
+
+      {/* ── Hero ── */}
+      <div className="nx-hero">
+        <nav className="nx-nav">
+          <div className="nx-nav-brand">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="11" stroke="#1ed760" strokeWidth="1.8"/>
+              <path d="M5 14 Q9 7 14 11 T23 14" stroke="#1ed760" strokeWidth="2"/>
+              <circle cx="14" cy="14" r="2.2" fill="#1ed760"/>
+            </svg>
+            <span className="nx-nav-wordmark">COX·LAB</span>
+          </div>
+          <div className="nx-nav-links">
+            <span className="nx-nav-link nx-nav-link-active">首页</span>
+            <span className="nx-nav-link">我的豆库</span>
+            <span className="nx-nav-link">炉次</span>
+            <span className="nx-nav-link">数据洞察</span>
+            <span className="nx-nav-link">杯测</span>
+          </div>
+          <div className="nx-nav-right">
+            <span style={{ fontSize: 18, opacity: 0.7 }}>🔍</span>
+            <div className="nx-avatar">P</div>
+          </div>
+        </nav>
+
+        <div className="nx-hero-bg" style={{ background: fv.grad }}/>
+        <OriginArt kind={fv.kind}/>
+        <div className="nx-hero-fade-h"/>
+        <div className="nx-hero-fade-v"/>
+
+        <div className="nx-hero-content">
+          <div className="nx-hero-eyebrow">
+            <OriginIcon kind={fv.kind} size={14} color="#1ed760"/>
+            实验室精选
+          </div>
+          <h1 className="nx-hero-title">{featured?.name}</h1>
+          <div className="nx-hero-meta">
+            <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+              {featured?.count} 炉次 · {featured?.versions}
+            </span>
+            <span className="nx-sep">·</span>
+            <span className="nx-hero-score">★ {featured?.best?.toFixed(1)} / 10</span>
+            <span className="nx-sep">·</span>
+            <span className="nx-chip-outline">
+              发展比 {featured?.bestDevPct ?? fv.heroDevPct ?? '—'}
+            </span>
+          </div>
+          <p className="nx-hero-desc">{fv.description}</p>
+          <div className="nx-hero-actions">
+            <button className="nx-btn-primary"
+                    onClick={() => featured && onSelectBean(featured.id)}>
+              <V60Icon size={16} color="#000"/>
+              查看详情
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* 信息体 */}
-      <div className="bean-card-body">
-        <h2 className="bean-card-name">{name}</h2>
-        <div className="bean-card-specs">
-          <span className="spec-pill">{variety}</span>
-          <span className="spec-pill">{process}</span>
+      {/* ── 风味 Best ── */}
+      {topBeans.length > 0 && (
+        <section className="nx-section nx-best-section">
+          <div className="nx-section-header">
+            <h2 className="nx-section-title">风味 Best</h2>
+            <span className="nx-section-sub">咖啡师认证 · 最好喝的 {topBeans.length} 支</span>
+          </div>
+          <div className="nx-poster-rail">
+            {topBeans.map((b, i) => (
+              <FlavorBestCard key={b.id} rank={i + 1} bean={b} vis={b.vis}
+                              onClick={() => onSelectBean(b.id)}/>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── 我的豆库 ── */}
+      <section className="nx-section nx-library-section">
+        <div className="nx-section-header">
+          <h2 className="nx-section-title">我的豆库</h2>
+          <span className="nx-section-sub">{beanStats.length} 个品种 · 全部烘焙档案</span>
         </div>
-        <div className="bean-card-footer">
-          <div className="bean-card-stat">
-            <span className="bstat-val" style={{ color: accent }}>
-              {bestScore ?? '—'}
-            </span>
-            <span className="bstat-label">最高杯测</span>
-          </div>
-          <div className="bean-card-stat">
-            <span className="bstat-val">{roastCount}</span>
-            <span className="bstat-label">炉次</span>
-          </div>
-          <div className="bean-card-stat">
-            <span className="bstat-val">{versions}</span>
-            <span className="bstat-label">版本</span>
-          </div>
+        <div className="nx-bean-grid">
+          {beanStats.map(b => (
+            <BeanCard key={b.id} bean={b} vis={b.vis}
+                      hovered={hoveredId === b.id}
+                      onHover={() => setHoveredId(b.id)}
+                      onLeave={() => setHoveredId(null)}
+                      onClick={() => onSelectBean(b.id)}/>
+          ))}
         </div>
+      </section>
+
+    </div>
+  )
+}
+
+function FlavorBestCard({ rank, bean, vis, onClick }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div className="nx-poster-card"
+         style={{
+           transform: hovered ? 'translateY(-4px)' : 'none',
+           boxShadow: hovered ? '0 14px 30px rgba(0,0,0,0.6)' : 'none',
+         }}
+         onClick={onClick}
+         onMouseEnter={() => setHovered(true)}
+         onMouseLeave={() => setHovered(false)}>
+      <div className="nx-poster-bg" style={{ background: vis.grad }}/>
+      <OriginArt kind={vis.kind}/>
+      <div className="nx-poster-fade"/>
+      <div className="nx-poster-rank" style={{ WebkitTextStroke: `1.5px ${vis.accent}` }}>
+        {rank}
+      </div>
+      <div className="nx-poster-score" style={{ color: vis.accent }}>
+        ★ {bean.best.toFixed(1)}
+      </div>
+      <div className="nx-poster-origin" style={{ color: vis.accent }}>
+        <OriginIcon kind={vis.kind} size={12} color={vis.accent}/>
+        {vis.region?.split('·')[0]?.trim()}
+      </div>
+      <div className="nx-poster-bottom">
+        <div className="nx-poster-name">{bean.name}</div>
+        <div className="nx-poster-tagline" style={{ color: vis.accent }}>{vis.tagline}</div>
+        <div className="nx-poster-stats">{bean.count} 炉次 · {bean.versions}</div>
       </div>
     </div>
   )
 }
 
-/* ── 首页 ── */
-export default function HomePage({ roasts, beans, onSelectBean }) {
-  // 为每款豆子计算统计
-  const beanStats = beans.map(b => {
-    const rows = roasts.filter(r =>
-      r.green_bean?.toLowerCase().includes(b.filterKey.toLowerCase())
-    )
-    const scores = rows.map(r => parseFloat(r.cupping_score)).filter(Boolean)
-    const versions = [...new Set(rows.map(r => r.profile_version).filter(Boolean))]
-    return {
-      ...b,
-      roastCount: rows.length,
-      bestScore: scores.length ? Math.max(...scores) : null,
-      versions: versions.length ? `v1–v${versions.length}` : '—',
-      visual: BEAN_VISUALS[b.id] || FALLBACK_VISUAL,
-    }
-  })
-
+function BeanCard({ bean, vis, hovered, onHover, onLeave, onClick }) {
   return (
-    <div className="home-page">
-      {/* Header */}
-      <header className="home-header">
-        <LogoFull />
-        <div className="home-header-stats">
-          <div className="hstat">
-            <div className="hstat-val">{roasts.length}</div>
-            <div className="hstat-label">总炉次</div>
-          </div>
-          <div className="hstat">
-            <div className="hstat-val">{beans.length}</div>
-            <div className="hstat-label">豆种</div>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero text */}
-      <div className="home-hero">
-        <h1 className="home-title">烘焙实验室</h1>
-        <p className="home-subtitle">选择豆种，开始探索完整的烘焙历程</p>
+    <div className="nx-bean-card"
+         style={{
+           transform: hovered ? 'scale(1.03)' : 'scale(1)',
+           boxShadow: hovered ? '0 14px 36px rgba(0,0,0,0.7)' : '0 2px 6px rgba(0,0,0,0.3)',
+         }}
+         onClick={onClick}
+         onMouseEnter={onHover}
+         onMouseLeave={onLeave}>
+      <div className="nx-bean-card-bg" style={{ background: vis.grad }}/>
+      <OriginArt kind={vis.kind}/>
+      <div className="nx-bean-card-fade"/>
+      <div className="nx-bean-tag" style={{ color: vis.accent, borderColor: vis.accent }}>
+        <OriginIcon kind={vis.kind} size={11} color={vis.accent}/>
+        {vis.tag}
       </div>
-
-      {/* Bean card grid */}
-      <div className="bean-grid">
-        {beanStats.map(b => (
-          <BeanCard
-            key={b.id}
-            {...b}
-            onClick={() => onSelectBean(b.id)}
-          />
-        ))}
+      {bean.best && (
+        <div className="nx-bean-score" style={{ color: vis.accent }}>
+          ★ {bean.best.toFixed(1)}
+        </div>
+      )}
+      <div className="nx-bean-bottom">
+        <div className="nx-bean-name">{bean.name}</div>
+        <div className="nx-bean-meta">{vis.region} · {bean.variety} · {bean.process}</div>
+        <div className="nx-bean-tagline" style={{ color: vis.accent }}>{vis.tagline}</div>
+        <div className="nx-bean-stats">
+          <span>{bean.count} 炉次</span>
+          <span className="nx-sep3">·</span>
+          <span>{bean.versions}</span>
+          <span className="nx-sep3">·</span>
+          <span>{bean.altitude}</span>
+        </div>
       </div>
     </div>
   )
