@@ -19,6 +19,17 @@ export const beanPoster = {
     description: '巴拿马极光卡杜艾，种植于 1525–1600m 的火山土壤，焦糖可可底韵。正处于曲线调优阶段，迭代进行中。',
     genres:      ['焦糖', '可可', '坚果'],
   },
+  colombia_huila_chiloso_washed: {
+    kind:        'colombia',
+    grad:        'linear-gradient(135deg, #2d1008 0%, #6b3018 55%, #d4783a 130%)',
+    accent:      '#d4783a',
+    tag:         'COE 卓越杯',
+    tagline:     '花香 · 焦糖甜感 · 果酸',
+    region:      '哥伦比亚 · 惠兰',
+    description: 'COE 2013/2015/2019 亚军庄园，贝塔尼亚庄园奇洛索水洗。经 3 炉迭代完成曲线定型，已归档。',
+    genres:      ['花香', '焦糖', '果酸', '干净'],
+    heroDevPct:  '14.3%',
+  },
   ethiopia_hambela_washed: {
     kind:        'ethiopia',
     grad:        'linear-gradient(135deg, #0a1a3d 0%, #152b5e 55%, #60a5fa 130%)',

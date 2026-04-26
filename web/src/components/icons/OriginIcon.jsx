@@ -24,5 +24,13 @@ export default function OriginIcon({ kind, size = 16, color = 'currentColor' }) 
     </svg>
   )
 
+  if (kind === 'colombia') return (
+    <svg {...props}>
+      <circle cx="12" cy="6" r="2.5"/>
+      <path d="M4 20 Q8 14 12 16 Q16 14 20 20Z"/>
+      <path d="M7 20 Q9 17 12 18 Q15 17 17 20"/>
+    </svg>
+  )
+
   return null
 }

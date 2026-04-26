@@ -65,5 +65,38 @@ export default function OriginArt({ kind }) {
     </svg>
   )
 
+  if (kind === 'colombia') return (
+    <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" fill="none" style={style}>
+      {/* Sun */}
+      <circle cx="60" cy="55" r="24" fill="rgba(212,120,58,0.4)"/>
+      <circle cx="60" cy="55" r="16" fill="rgba(212,120,58,0.55)"/>
+      {[0,45,90,135,180,225,270,315].map((a,i) => (
+        <line key={i}
+              x1={60 + Math.cos(a*Math.PI/180)*20} y1={55 + Math.sin(a*Math.PI/180)*20}
+              x2={60 + Math.cos(a*Math.PI/180)*30} y2={55 + Math.sin(a*Math.PI/180)*30}
+              stroke="rgba(212,120,58,0.5)" strokeWidth="1.5"/>
+      ))}
+      {/* Rolling hills */}
+      <path d="M0 200 Q80 165 160 180 Q240 195 320 165 Q370 148 400 155 L400 260 L0 260Z"
+            fill="rgba(0,0,0,0.38)"/>
+      <path d="M0 225 Q100 210 200 218 Q300 226 400 214 L400 260 L0 260Z"
+            fill="rgba(0,0,0,0.50)"/>
+      {/* Coffee branch */}
+      <g transform="translate(290,160)">
+        <path d="M0 0 Q30 -8 60 -2" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/>
+        {[8,20,32,44,56].map((x,i) => (
+          <ellipse key={i} cx={x} cy={-3+(i%2)*8} rx="9" ry="3.5" fill="rgba(255,255,255,0.22)"
+                   transform={`rotate(${(i%2)*35-17} ${x} ${-3+(i%2)*8})`}/>
+        ))}
+        {[15,35,52].map((x,i) => (
+          <circle key={i} cx={x} cy={4+(i%2)*3} r="2.8" fill="rgba(212,120,58,0.8)"/>
+        ))}
+      </g>
+      {/* Mist lines */}
+      <path d="M-10 145 Q100 138 220 142 T420 138" stroke="rgba(255,255,255,0.18)" strokeWidth="1"/>
+      <path d="M-10 160 Q120 154 240 158 T420 154" stroke="rgba(255,255,255,0.12)" strokeWidth="1"/>
+    </svg>
+  )
+
   return null
 }

@@ -39,6 +39,20 @@ const BEANS = [
     analysisFilter: f => /log007[2-6]/.test(f),
   },
   {
+    id:          'colombia_huila_chiloso_washed',
+    name:        '哥伦比亚惠兰奇洛索',
+    variety:     'Chiloso',
+    process:     '水洗',
+    altitude:    '1800–1900m',
+    filterKey:   'Chiloso',
+    cardFile:    'colombia_huila_chiloso_washed',
+    klogOffset:  76,
+    // 杯测：含 'chiloso' 的文件（cupping_023_col_chiloso_v1, cupping_025_col_chiloso_v3）
+    cuppingFilter:  f => f.includes('chiloso'),
+    // 分析：log0099–log0101（Colombia roast_ids 23–25，offset 76）
+    analysisFilter: f => /col.*chilo/i.test(f),
+  },
+  {
     id:          'ethiopia_hambela_washed',
     name:        '埃塞俄比亚罕贝拉',
     variety:     'Heirloom',

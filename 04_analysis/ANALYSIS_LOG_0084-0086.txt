@@ -1,0 +1,163 @@
+================================================================================
+                    ROAST ANALYSIS REPORT: LOG 0084-0086
+                   Catimor Natural Yunnan Filter v5.0 Profile
+================================================================================
+
+TEST PARAMETERS:
+  Roaster: Kaffelogic Nano 7e (KN1007B/E)
+  Green Bean: Catimor Natural Yunnan (Ethiopia)
+  Profile: Catimor_Natural_Yunnan_Filter_v5.kpro
+  Expected FC Temperature: 194°C
+  Duration: 3 consecutive roasts (March 10-12, 2026)
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+1. FIRST CRACK DETECTION
+   All three roasts achieved FC very close to expected temperature:
+   - Log 84 (120g):  FC at 195.2°C (+1.2°C deviation) ✓
+   - Log 85 (140g):  FC at 194.2°C (+0.2°C deviation) ✓ [BEST]
+   - Log 86 (140g):  FC at 196.2°C (+2.2°C deviation) ✓
+
+2. DEVELOPMENT PHASE ANALYSIS
+   Log 85 shows longest development (73s, 17.8%), logs 84 & 86 more aggressive:
+   - Log 84: 65.0s development, 15.9% ratio (120g load)
+   - Log 85: 73.0s development, 17.8% ratio (140g load) - more developed
+   - Log 86: 64.0s development, 15.6% ratio (140g load) - shortest dev
+
+3. ROAST CONSISTENCY
+   Total roast times very consistent (408-411s):
+   - Log 84: 408.6s total (120g)
+   - Log 85: 410.6s total (140g)
+   - Log 86: 409.9s total (140g)
+
+   End temperatures consistent at 202-203°C:
+   - Log 84: 202.67°C
+   - Log 85: 202.38°C (slightly lower)
+   - Log 86: 203.04°C (slightly higher)
+
+4. RATE OF RISE (ROR) BEHAVIOR
+   ROR at crack was healthy (11-13°C/min range):
+   - Pre-crack ROR peak: ~13-14°C/min
+   - Post-crack ROR stable with no negative oscillations
+   - Final 30s ROR: 6.9-7.5°C/min (smooth decline into drop)
+
+   Minimum ROR post-crack (indicates PID stability):
+   - Log 84: 4.53°C/min (worst)
+   - Log 85: 3.22°C/min (lowest, best control)
+   - Log 86: 3.60°C/min (lowest)
+
+5. WEIGHT LOSS ANALYSIS
+   User recorded output weights:
+   - Log 84: Input 120g → No output recorded (est. ~107g = 10.8% loss)
+   - Log 85: Input 140g → Output 126g (10.0% loss)
+   - Log 86: Input 140g → Output 127g (9.3% loss)
+
+   Higher load (140g) shows slightly lower loss ratio - typical for hot air.
+
+================================================================================
+PROFILE PERFORMANCE ASSESSMENT
+================================================================================
+
+STRENGTHS:
+✓ FC detection reliable and consistent (all within 2.2°C of target)
+✓ No ROR oscillations or stalling post-crack (PID control excellent)
+✓ Smooth ROR decline into drop phase
+✓ End temperature very consistent across loads (202-203°C range)
+✓ Development times reasonable for filter coffee (15-18%)
+
+AREAS FOR CONSIDERATION:
+• Log 85 (140g) shows slightly different profile vs 120g loads
+  - Longer development (73s vs 65s)
+  - Lower worst ROR (better control)
+  - Slightly lower end temp
+  This suggests profile may need fine-tuning for 140g load
+
+• Load size impact evident:
+  - 120g (log 84) faster ramp, shorter dev time
+  - 140g (logs 85-86) longer development, more consistent end temps
+
+================================================================================
+TECHNICAL NOTES
+================================================================================
+
+First Crack Detection Method:
+- Identified ROR local maxima in 180-210°C range
+- Selected peak closest to expect_fc temperature (194°C)
+- All three logs showed secondary ROR peak in range 194-196°C
+- This peak marks the onset of audible first crack
+
+ROR Oscillation Analysis:
+- No negative ROR events recorded (threshold: ROR < 0°C/min)
+- "Worst ROR" = minimum ROR value post-crack (after FC)
+- Values 3.22-4.53°C/min indicate no PID stalling/hunting
+- Smooth monotonic ROR decline indicates stable profile execution
+
+Temperature Measurement:
+- Data shows EXHAUST AIR temperature (not bean core)
+- Kaffelogic sensor reads air exiting the bean mass
+- Typical 20-30°C difference between exhaust air and bean surface
+
+================================================================================
+RECOMMENDATIONS FOR NEXT BATCH
+================================================================================
+
+1. Increase Load Size Testing:
+   The 140g roasts (logs 85-86) show excellent consistency.
+   Consider whether 140g is becoming your standard batch size.
+
+2. Profile Refinement for 140g:
+   Since 140g shows longer development time, consider:
+   - Minor reduction in fan speed 180-200°C range
+   - Or slightly higher power in early stages
+   Target: Bring log 85/86 dev time closer to log 84's 65s
+
+3. Weight Documentation:
+   Please record output weight for log 84 for complete loss analysis.
+   Consistent weight tracking will help optimize for desired roast degree.
+
+4. Monitor for Batch Differences:
+   All three roasts very similar - excellent consistency.
+   Watch for any changes in green bean source or ambient conditions
+   that might shift the profile.
+
+================================================================================
+DETAILED DATA TABLE
+================================================================================
+
+Log #  | Load   | FC Time | FC Temp | FC Dev | End Time | End Temp | Dev Ratio | Dev Time | Min ROR
+-------|--------|---------|---------|--------|----------|----------|-----------|----------|----------
+84     | 120g   | 343.6s  | 195.2°C | +1.2°C | 408.6s   | 202.7°C  | 15.9%     | 65.0s    | 4.53°C/m
+85     | 140g   | 337.6s  | 194.2°C | +0.2°C | 410.6s   | 202.4°C  | 17.8%     | 73.0s    | 3.22°C/m
+86     | 140g   | 345.9s  | 196.2°C | +2.2°C | 409.9s   | 202.8°C  | 15.6%     | 64.0s    | 3.60°C/m
+-------|--------|---------|---------|--------|----------|----------|-----------|----------|----------
+AVG    | -      | 342.4s  | 195.2°C | +1.2°C | 409.7s   | 202.6°C  | 16.4%     | 67.3s    | 3.78°C/m
+
+================================================================================
+DATA QUALITY ASSESSMENT
+================================================================================
+
+Log 0084:
+✓ Complete data (636 points)
+✓ Clear roast_end marker (!roast_end:401.101)
+✓ No anomalies in ROR or temperature
+✗ Missing output weight
+
+Log 0085:
+✓ Complete data (638 points)
+✓ Clear roast_end marker (!roast_end:403.074)
+✓ Output weight recorded (126g)
+✓ No anomalies detected
+
+Log 0086:
+✓ Complete data (656 points)
+✓ Clear roast_end marker (!roast_end:402.445)
+✓ Output weight recorded (127g)
+✓ No anomalies detected
+
+================================================================================
+Analysis Date: 2026-04-19
+Analysis Method: Python ROR peak detection algorithm
+Data Source: Kaffelogic native .klog format (sensor resolution: 1 second)
+================================================================================
