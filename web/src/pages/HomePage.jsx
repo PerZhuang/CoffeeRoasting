@@ -3,8 +3,9 @@ import { beanPoster, FALLBACK_POSTER } from '../config/beanVisuals.js'
 import OriginArt from '../components/icons/OriginArt.jsx'
 import OriginIcon from '../components/icons/OriginIcon.jsx'
 import V60Icon from '../components/icons/V60Icon.jsx'
+import NxNav from '../components/NxNav.jsx'
 
-export default function HomePage({ roasts, beans, onSelectBean }) {
+export default function HomePage({ roasts, beans, page, onNavigate, onSelectBean }) {
   const [hoveredId, setHoveredId] = useState(null)
 
   const beanStats = beans.map(b => {
@@ -37,27 +38,7 @@ export default function HomePage({ roasts, beans, onSelectBean }) {
 
       {/* ── Hero ── */}
       <div className="nx-hero">
-        <nav className="nx-nav">
-          <div className="nx-nav-brand">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="11" stroke="#1ed760" strokeWidth="1.8"/>
-              <path d="M5 14 Q9 7 14 11 T23 14" stroke="#1ed760" strokeWidth="2"/>
-              <circle cx="14" cy="14" r="2.2" fill="#1ed760"/>
-            </svg>
-            <span className="nx-nav-wordmark">COX·LAB</span>
-          </div>
-          <div className="nx-nav-links">
-            <span className="nx-nav-link nx-nav-link-active">首页</span>
-            <span className="nx-nav-link">我的豆库</span>
-            <span className="nx-nav-link">炉次</span>
-            <span className="nx-nav-link">数据洞察</span>
-            <span className="nx-nav-link">杯测</span>
-          </div>
-          <div className="nx-nav-right">
-            <span style={{ fontSize: 18, opacity: 0.7 }}>🔍</span>
-            <div className="nx-avatar">P</div>
-          </div>
-        </nav>
+        <NxNav page={page} onNavigate={onNavigate} mode="hero"/>
 
         <div className="nx-hero-bg" style={{ background: fv.grad }}/>
         <OriginArt kind={fv.kind}/>

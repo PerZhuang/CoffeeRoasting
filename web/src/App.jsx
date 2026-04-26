@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import HomePage from './pages/HomePage.jsx'
-import BeanPage from './pages/BeanPage.jsx'
+import HomePage     from './pages/HomePage.jsx'
+import BeanPage     from './pages/BeanPage.jsx'
+import LibraryPage  from './pages/LibraryPage.jsx'
+import RoastsPage   from './pages/RoastsPage.jsx'
+import InsightsPage from './pages/InsightsPage.jsx'
+import CuppingPage  from './pages/CuppingPage.jsx'
 import { loadManifest, loadRoastLog } from './utils/dataLoader.js'
 
 /* 豆种静态定义 — 新增豆种时在此追加
@@ -19,9 +23,7 @@ const BEANS = [
     filterKey:   'Catimor',
     cardFile:    'yunnan_puer_catimor_nat',
     klogOffset:  69,
-    // 杯测：含 'yunnan' 的文件（cupping_007_yunnan_v1 … cupping_012_yunnan_v5）
-    cuppingFilter: f => f.includes('yunnan'),
-    // 分析：log0077–log0083（Yunnan roast_id 8–14，offset 69）
+    cuppingFilter:  f => f.includes('yunnan'),
     analysisFilter: f => /log00(7[7-9]|8[0-3])/.test(f),
   },
   {
@@ -33,9 +35,7 @@ const BEANS = [
     filterKey:   'Catuai',
     cardFile:    'panama_aurora_catuai_nat',
     klogOffset:  69,
-    // 杯测：不含 'yunnan' 的文件（cupping_004_v4, 005_v5, 006_reroast）
-    cuppingFilter: f => !f.includes('yunnan'),
-    // 分析：log0072–log0076（Panama roast_ids 3–6 + reroast，offset 69）
+    cuppingFilter:  f => !f.includes('yunnan'),
     analysisFilter: f => /log007[2-6]/.test(f),
   },
   {
@@ -47,9 +47,7 @@ const BEANS = [
     filterKey:   'Hambela',
     cardFile:    'ethiopia_hambela_washed',
     klogOffset:  76,
-    // 杯测：含 'eth' 或 'hambela' 的文件（当前暂无）
-    cuppingFilter: f => /eth|hambela/i.test(f),
-    // 分析：log009xxxx（Ethiopia roast_ids 16–22，offset 76 → log0092–0098）
+    cuppingFilter:  f => /eth|hambela/i.test(f),
     analysisFilter: f => /log009/.test(f),
   },
 ]
@@ -58,8 +56,9 @@ export default function App() {
   const [manifest, setManifest] = useState(null)
   const [roasts, setRoasts]     = useState([])
   const [loading, setLoading]   = useState(true)
-  const [page, setPage]         = useState('home')   // 'home' | 'bean'
+  const [page, setPage]         = useState('home')
   const [currentBeanId, setCurrentBeanId] = useState(null)
+  const [prevPage, setPrevPage] = useState('home')
 
   useEffect(() => {
     Promise.all([loadManifest(), loadRoastLog()])
@@ -68,12 +67,17 @@ export default function App() {
   }, [])
 
   const handleSelectBean = (beanId) => {
+    setPrevPage(page)
     setCurrentBeanId(beanId)
     setPage('bean')
   }
 
+  const handleNavigate = (p) => {
+    setPage(p)
+  }
+
   const handleBack = () => {
-    setPage('home')
+    setPage(prevPage === 'bean' ? 'library' : prevPage)
     setCurrentBeanId(null)
   }
 
@@ -103,7 +107,57 @@ export default function App() {
       <HomePage
         roasts={roasts}
         beans={BEANS}
+        page={page}
+        onNavigate={handleNavigate}
         onSelectBean={handleSelectBean}
+      />
+    )
+  }
+
+  if (page === 'library') {
+    return (
+      <LibraryPage
+        roasts={roasts}
+        beans={BEANS}
+        page={page}
+        onNavigate={handleNavigate}
+        onSelectBean={handleSelectBean}
+      />
+    )
+  }
+
+  if (page === 'roasts') {
+    return (
+      <RoastsPage
+        roasts={roasts}
+        beans={BEANS}
+        page={page}
+        onNavigate={handleNavigate}
+        onSelectBean={handleSelectBean}
+      />
+    )
+  }
+
+  if (page === 'insights') {
+    return (
+      <InsightsPage
+        roasts={roasts}
+        beans={BEANS}
+        page={page}
+        onNavigate={handleNavigate}
+        onSelectBean={handleSelectBean}
+      />
+    )
+  }
+
+  if (page === 'cupping') {
+    return (
+      <CuppingPage
+        roasts={roasts}
+        beans={BEANS}
+        manifest={manifest}
+        page={page}
+        onNavigate={handleNavigate}
       />
     )
   }
@@ -116,19 +170,16 @@ export default function App() {
     r.green_bean?.toLowerCase().includes(bean.filterKey.toLowerCase())
   )
 
-  // 过滤出该豆子相关的 klog（按 roast_id + offset 精确匹配）
   const allKlogs = manifest?.klogs ?? []
   const beanKlogSet = new Set(
     beanRoasts.map(r => `log${String(parseInt(r.roast_id) + bean.klogOffset).padStart(4, '0')}`)
   )
   const beanKlogs = allKlogs.filter(k => beanKlogSet.has(k))
 
-  // 杯测文件过滤（使用精确函数过滤，避免多豆种混淆）
   const cuppingFiles = bean.cuppingFilter
     ? (manifest?.cupping ?? []).filter(bean.cuppingFilter)
     : []
 
-  // 分析文件过滤
   const analysisFiles = bean.analysisFilter
     ? (manifest?.analysis ?? []).filter(bean.analysisFilter)
     : []
