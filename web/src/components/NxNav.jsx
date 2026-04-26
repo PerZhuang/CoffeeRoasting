@@ -11,7 +11,8 @@ const NAV_LINKS = [
 export default function NxNav({ page, onNavigate, mode = 'page' }) {
   return (
     <nav className={`nx-nav ${mode === 'hero' ? 'nx-nav-hero' : 'nx-nav-solid'}`}>
-      <div className="nx-nav-brand">
+      <div className="nx-nav-brand" onClick={() => onNavigate('home')}
+           style={{ cursor: 'pointer' }}>
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
           <circle cx="14" cy="14" r="11" stroke="#1ed760" strokeWidth="1.8"/>
           <path d="M5 14 Q9 7 14 11 T23 14" stroke="#1ed760" strokeWidth="2"/>
