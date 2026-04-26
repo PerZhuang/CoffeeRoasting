@@ -28,10 +28,6 @@ export default function NxNav({ page, onNavigate, mode = 'page' }) {
           </span>
         ))}
       </div>
-      <div className="nx-nav-right">
-        <span style={{ fontSize: 18, opacity: 0.7 }}>🔍</span>
-        <div className="nx-avatar">P</div>
-      </div>
     </nav>
   )
 }
