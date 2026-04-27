@@ -39,6 +39,7 @@ export default function BeanPage({
   const [selectedCupping, setSelectedCupping]   = useState(() => cuppingFiles?.[cuppingFiles.length - 1] ?? null)
   const [selectedAnalysis, setSelectedAnalysis] = useState(() => analysisFiles?.[analysisFiles.length - 1] ?? null)
   const [selectedRow, setSelectedRow]           = useState(null)
+  const [showBeanCard, setShowBeanCard]         = useState(false)
 
   const vis = beanPoster[beanId] || FALLBACK_POSTER
   const accent = vis.accent || '#1ed760'
@@ -93,58 +94,60 @@ export default function BeanPage({
         </div>
       </div>
 
-      {/* ── Bean identity strip (always visible) ── */}
+      {/* ── Bean identity panel (always visible, two-zone) ── */}
       <div className="nx-bp-info-strip">
-        <div className="nx-bp-info-row">
-          {vis.region && (
-            <div className="nx-bp-info-item">
-              <span className="nx-bp-info-label">产区</span>
-              <span className="nx-bp-info-value">{vis.region}</span>
+
+        {/* Zone A: 2×2 spec grid */}
+        <div className="nx-bp-info-meta">
+          {[
+            { label: '产区',  value: vis.region },
+            { label: '品种',  value: variety    },
+            { label: '处理法', value: process    },
+            { label: '海拔',  value: altitude   },
+          ].filter(i => i.value).map(item => (
+            <div key={item.label} className="nx-bp-info-item">
+              <span className="nx-bp-info-label">{item.label}</span>
+              <span className="nx-bp-info-value">{item.value}</span>
             </div>
-          )}
-          {variety && (
-            <div className="nx-bp-info-item">
-              <span className="nx-bp-info-label">品种</span>
-              <span className="nx-bp-info-value">{variety}</span>
-            </div>
-          )}
-          {process && (
-            <div className="nx-bp-info-item">
-              <span className="nx-bp-info-label">处理法</span>
-              <span className="nx-bp-info-value">{process}</span>
-            </div>
-          )}
-          {altitude && (
-            <div className="nx-bp-info-item">
-              <span className="nx-bp-info-label">海拔</span>
-              <span className="nx-bp-info-value">{altitude}</span>
-            </div>
-          )}
-          {beanCardFile && (
-            <button
-              className="nx-bp-info-detail-btn"
-              onClick={() => {/* open a modal or navigate to bean card */}}
-              style={{ marginLeft: 'auto', color: accent, background: 'none', border: `1px solid ${accent}`,
-                       borderRadius: 4, padding: '3px 10px', fontSize: 11, cursor: 'pointer',
-                       fontWeight: 600, letterSpacing: '.04em' }}>
-              生豆信息卡 →
-            </button>
-          )}
+          ))}
         </div>
+
+        {/* Zone B: flavor profile */}
         {vis.genres?.length > 0 && (
-          <div className="nx-bp-flavor-tags">
-            {vis.genres.map(g => (
-              <span key={g} className="nx-bp-flavor-tag"
-                    style={{ borderColor: `rgba(${hexToRgb(accent)},0.5)`, color: accent }}>
-                {g}
+          <div className="nx-bp-info-flavors">
+            <div className="nx-bp-flavor-tags">
+              {vis.genres.map(g => (
+                <span key={g} className="nx-bp-flavor-tag"
+                      style={{
+                        background:  `rgba(${hexToRgb(accent)},0.12)`,
+                        borderColor: `rgba(${hexToRgb(accent)},0.35)`,
+                        color: accent,
+                      }}>
+                  {g}
+                </span>
+              ))}
+            </div>
+            {vis.tagline && <p className="nx-bp-tagline">{vis.tagline}</p>}
+            {beanCardFile && (
+              <span className="nx-bp-bean-card-link"
+                    style={{ color: accent, borderBottomColor: `rgba(${hexToRgb(accent)},0.4)` }}
+                    onClick={() => setShowBeanCard(s => !s)}>
+                {showBeanCard ? '收起信息卡 ↑' : '生豆信息卡 →'}
               </span>
-            ))}
-            {vis.tagline && (
-              <span className="nx-bp-tagline">{vis.tagline}</span>
             )}
           </div>
         )}
       </div>
+
+      {/* Expandable full markdown bean card */}
+      {showBeanCard && (
+        <div className="nx-bp-bean-card-expand">
+          <MarkdownPanel
+            src={beanCardFile ? `01_green_beans/${beanCardFile}.md` : null}
+            placeholder="暂无生豆信息卡"
+          />
+        </div>
+      )}
 
       {/* ── Tab bar ── */}
       <div className="nx-bp-tabs">
