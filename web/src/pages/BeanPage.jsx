@@ -7,9 +7,8 @@ import OriginIcon from '../components/icons/OriginIcon.jsx'
 import { beanPoster, FALLBACK_POSTER } from '../config/beanVisuals.js'
 
 const TABS = [
-  { id: 'curve',    label: '📈 烘焙曲线' },
+  { id: 'curve',    label: '📈 定型曲线' },
   { id: 'log',      label: '📋 烘焙记录' },
-  { id: 'bean',     label: '🫘 生豆信息' },
   { id: 'cupping',  label: '☕ 杯测反馈' },
   { id: 'analysis', label: '📝 复盘小结' },
 ]
@@ -32,6 +31,7 @@ function scoreColor(s) {
 export default function BeanPage({
   beanId, beanName, beanCardFile, klogOffset = 69,
   roasts, klogs, cuppingFiles, analysisFiles,
+  variety = '', process = '', altitude = '',
   onBack,
 }) {
   const [tab, setTab]                           = useState('curve')
@@ -93,6 +93,59 @@ export default function BeanPage({
         </div>
       </div>
 
+      {/* ── Bean identity strip (always visible) ── */}
+      <div className="nx-bp-info-strip">
+        <div className="nx-bp-info-row">
+          {vis.region && (
+            <div className="nx-bp-info-item">
+              <span className="nx-bp-info-label">产区</span>
+              <span className="nx-bp-info-value">{vis.region}</span>
+            </div>
+          )}
+          {variety && (
+            <div className="nx-bp-info-item">
+              <span className="nx-bp-info-label">品种</span>
+              <span className="nx-bp-info-value">{variety}</span>
+            </div>
+          )}
+          {process && (
+            <div className="nx-bp-info-item">
+              <span className="nx-bp-info-label">处理法</span>
+              <span className="nx-bp-info-value">{process}</span>
+            </div>
+          )}
+          {altitude && (
+            <div className="nx-bp-info-item">
+              <span className="nx-bp-info-label">海拔</span>
+              <span className="nx-bp-info-value">{altitude}</span>
+            </div>
+          )}
+          {beanCardFile && (
+            <button
+              className="nx-bp-info-detail-btn"
+              onClick={() => {/* open a modal or navigate to bean card */}}
+              style={{ marginLeft: 'auto', color: accent, background: 'none', border: `1px solid ${accent}`,
+                       borderRadius: 4, padding: '3px 10px', fontSize: 11, cursor: 'pointer',
+                       fontWeight: 600, letterSpacing: '.04em' }}>
+              生豆信息卡 →
+            </button>
+          )}
+        </div>
+        {vis.genres?.length > 0 && (
+          <div className="nx-bp-flavor-tags">
+            {vis.genres.map(g => (
+              <span key={g} className="nx-bp-flavor-tag"
+                    style={{ borderColor: `rgba(${hexToRgb(accent)},0.5)`, color: accent }}>
+                {g}
+              </span>
+            ))}
+            {vis.tagline && (
+              <span className="nx-bp-tagline">{vis.tagline}</span>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* ── Tab bar ── */}
       <div className="nx-bp-tabs">
         {TABS.map(t => (
@@ -108,11 +161,59 @@ export default function BeanPage({
       {/* ── Content ── */}
       <div className="nx-bp-body">
 
-        {/* 曲线 + 烘焙记录：左侧炉次 + 右侧内容 */}
-        {(tab === 'curve' || tab === 'log') && (
+        {/* 定型曲线：全宽，展示当前定型版本 */}
+        {tab === 'curve' && (
+          <div className="nx-bp-full nx-bp-curve-panel">
+            {/* 当前炉次标签 */}
+            {row && (
+              <div className="nx-bp-curve-badge">
+                <span style={{ color: '#737373' }}>当前查看</span>
+                <span className="nx-bp-curve-badge-id">
+                  {`log${String(parseInt(row.roast_id) + klogOffset).padStart(4,'0')}`.replace('log0','#')}
+                </span>
+                <span className="nx-bp-ep-ver">{row.profile_version}</span>
+                <span style={{ color: '#737373', marginLeft: 'auto', fontSize: 11 }}>
+                  在烘焙记录中切换炉次 →
+                </span>
+              </div>
+            )}
+            {/* 统计卡 */}
+            {row && (
+              <div className="nx-bp-stats">
+                {[
+                  { label: '一爆温度', value: row.actual_fc_temp !== 'N/A' ? row.actual_fc_temp : '—', unit: '°C', hi: true },
+                  { label: '发展比',   value: row.dev_pct || '—', hi: true },
+                  { label: '出豆温度', value: row.roast_end_temp || '—', unit: '°C' },
+                  { label: '总时长',   value: fmtTime(row.total_time_s) },
+                  { label: '失重率',   value: row.weight_loss_pct || '—' },
+                  { label: '杯测',     value: row.cupping_score || '—',
+                    style: { color: scoreColor(row.cupping_score) } },
+                ].map(s => (
+                  <div key={s.label} className="nx-bp-stat-card">
+                    <div className="nx-bp-stat-label">{s.label}</div>
+                    <div className="nx-bp-stat-value"
+                         style={s.hi ? { color: accent } : s.style ?? {}}>
+                      {s.value}
+                      {s.unit && <span className="nx-bp-stat-unit">{s.unit}</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* 曲线图 */}
+            <div className="nx-bp-curve-card">
+              <ErrorBoundary>
+                <RoastCurve klogName={selectedKlog} />
+              </ErrorBoundary>
+            </div>
+          </div>
+        )}
+
+        {/* 烘焙记录：左侧炉次列表 + 右侧完整表格 */}
+        {tab === 'log' && (
           <div className="nx-bp-split">
 
-            {/* 左：炉次 Episode 列表 */}
+            {/* 左：炉次列表 */}
             <div className="nx-bp-episodes">
               <div className="nx-bp-ep-header">
                 炉次 · <span style={{ color: accent }}>{roasts.length}</span>
@@ -154,104 +255,57 @@ export default function BeanPage({
               </div>
             </div>
 
-            {/* 右：主内容 */}
+            {/* 右：完整数据表格 */}
             <div className="nx-bp-main">
-
-              {tab === 'curve' && (
-                <>
-                  {/* 统计卡 */}
-                  {row && (
-                    <div className="nx-bp-stats">
-                      {[
-                        { label: '一爆温度', value: row.actual_fc_temp !== 'N/A' ? row.actual_fc_temp : '—', unit: '°C', hi: true },
-                        { label: '发展比',   value: row.dev_pct || '—', hi: true },
-                        { label: '出豆温度', value: row.roast_end_temp || '—', unit: '°C' },
-                        { label: '总时长',   value: fmtTime(row.total_time_s) },
-                        { label: '失重率',   value: row.weight_loss_pct || '—' },
-                        { label: '杯测',     value: row.cupping_score || '—',
-                          style: { color: scoreColor(row.cupping_score) } },
-                      ].map(s => (
-                        <div key={s.label} className="nx-bp-stat-card">
-                          <div className="nx-bp-stat-label">{s.label}</div>
-                          <div className="nx-bp-stat-value"
-                               style={s.hi ? { color: accent } : s.style ?? {}}>
-                            {s.value}
-                            {s.unit && <span className="nx-bp-stat-unit">{s.unit}</span>}
-                          </div>
-                        </div>
+              <div className="nx-table-wrap">
+                <table className="nx-roast-table">
+                  <thead>
+                    <tr>
+                      {['#','日期','版本','一爆℃','发展比','出豆℃','总时','失重','杯测','风味'].map(h => (
+                        <th key={h}>{h}</th>
                       ))}
-                    </div>
-                  )}
-                  {/* 曲线图 */}
-                  <div className="nx-bp-curve-card">
-                    <ErrorBoundary>
-                      <RoastCurve klogName={selectedKlog} />
-                    </ErrorBoundary>
-                  </div>
-                </>
-              )}
-
-              {tab === 'log' && (
-                <div className="nx-table-wrap">
-                  <table className="nx-roast-table">
-                    <thead>
-                      <tr>
-                        {['#','日期','版本','一爆℃','发展比','出豆℃','总时','失重','杯测','风味'].map(h => (
-                          <th key={h}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[...roasts].reverse().map(r => {
-                        const logNum = parseInt(r.roast_id) + klogOffset
-                        const klog   = `log${String(logNum).padStart(4, '0')}`
-                        return (
-                          <tr key={r.roast_id}
-                              className={selectedKlog === klog ? 'nx-row-active' : ''}
-                              style={selectedKlog === klog
-                                ? { background: `rgba(${hexToRgb(accent)},0.08)` }
-                                : {}}
-                              onClick={() => handleSelectRow(r)}>
-                            <td className="nx-td-date" style={{ color: '#b3b3b3' }}>
-                              {klog.replace('log0', '#')}
-                            </td>
-                            <td className="nx-td-date">{r.date}</td>
-                            <td><span className="nx-td-ver">{r.profile_version}</span></td>
-                            <td className="nx-td-num" style={{ color: accent }}>
-                              {r.actual_fc_temp || '—'}
-                            </td>
-                            <td className="nx-td-num" style={{ color: accent, fontWeight: 700 }}>
-                              {r.dev_pct || '—'}
-                            </td>
-                            <td className="nx-td-num">{r.roast_end_temp || '—'}</td>
-                            <td className="nx-td-num">{fmtTime(r.total_time_s)}</td>
-                            <td className="nx-td-num">{r.weight_loss_pct || '—'}</td>
-                            <td className="nx-td-num"
-                                style={{ color: scoreColor(r.cupping_score), fontWeight: 700 }}>
-                              {r.cupping_score || '—'}
-                            </td>
-                            <td style={{ maxWidth: 160, overflow: 'hidden',
-                                         textOverflow: 'ellipsis', color: '#737373', fontSize: 11 }}>
-                              {r.flavor_notes || '—'}
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...roasts].reverse().map(r => {
+                      const logNum = parseInt(r.roast_id) + klogOffset
+                      const klog   = `log${String(logNum).padStart(4, '0')}`
+                      return (
+                        <tr key={r.roast_id}
+                            className={selectedKlog === klog ? 'nx-row-active' : ''}
+                            style={selectedKlog === klog
+                              ? { background: `rgba(${hexToRgb(accent)},0.08)` }
+                              : {}}
+                            onClick={() => handleSelectRow(r)}>
+                          <td className="nx-td-date" style={{ color: '#b3b3b3' }}>
+                            {klog.replace('log0', '#')}
+                          </td>
+                          <td className="nx-td-date">{r.date}</td>
+                          <td><span className="nx-td-ver">{r.profile_version}</span></td>
+                          <td className="nx-td-num" style={{ color: accent }}>
+                            {r.actual_fc_temp || '—'}
+                          </td>
+                          <td className="nx-td-num" style={{ color: accent, fontWeight: 700 }}>
+                            {r.dev_pct || '—'}
+                          </td>
+                          <td className="nx-td-num">{r.roast_end_temp || '—'}</td>
+                          <td className="nx-td-num">{fmtTime(r.total_time_s)}</td>
+                          <td className="nx-td-num">{r.weight_loss_pct || '—'}</td>
+                          <td className="nx-td-num"
+                              style={{ color: scoreColor(r.cupping_score), fontWeight: 700 }}>
+                            {r.cupping_score || '—'}
+                          </td>
+                          <td style={{ maxWidth: 160, overflow: 'hidden',
+                                       textOverflow: 'ellipsis', color: '#737373', fontSize: 11 }}>
+                            {r.flavor_notes || '—'}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
-
-        {/* 生豆信息 */}
-        {tab === 'bean' && (
-          <div className="nx-bp-full">
-            <MarkdownPanel
-              src={beanCardFile ? `01_green_beans/${beanCardFile}.md` : null}
-              placeholder="暂无生豆信息卡"
-            />
           </div>
         )}
 

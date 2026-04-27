@@ -198,6 +198,9 @@ export default function App() {
       beanId={bean.id}
       beanName={bean.name}
       beanCardFile={bean.cardFile}
+      variety={bean.variety}
+      process={bean.process}
+      altitude={bean.altitude}
       klogOffset={bean.klogOffset}
       roasts={beanRoasts}
       klogs={beanKlogs}
