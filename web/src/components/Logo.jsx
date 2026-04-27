@@ -1,6 +1,6 @@
 import React from 'react'
 
-/** Cox-Lab 品牌 Logo — 烧瓶（Erlenmeyer flask）图形标 */
+/** GAURI 品牌 Logo — 高黎贡山 + 怒江 图形标 */
 export function LogoIcon({ size = 28, color = '#f0a030' }) {
   return (
     <svg
@@ -39,7 +39,7 @@ export function LogoFull({ className = '' }) {
     <div className={`logo-full ${className}`}>
       <LogoIcon size={28} />
       <div className="logo-wordmark">
-        <span className="logo-name">Cox-Lab</span>
+        <span className="logo-name">GAURI</span>
         <span className="logo-tagline">Roast Intelligence</span>
       </div>
     </div>

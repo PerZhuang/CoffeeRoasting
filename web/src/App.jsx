@@ -100,18 +100,13 @@ export default function App() {
       <div style={{ display:'flex', flexDirection:'column', alignItems:'center',
                     justifyContent:'center', height:'100vh', background:'var(--bg)',
                     color:'var(--text3)', gap:16 }}>
-        <svg width="36" height="41" viewBox="0 0 28 32" fill="none">
-          <rect x="10" y="1" width="8" height="9" rx="1.5" stroke="#f0a030" strokeWidth="1.7"/>
-          <line x1="10" y1="10" x2="4.5" y2="18" stroke="#f0a030" strokeWidth="1.7" strokeLinecap="round"/>
-          <line x1="18" y1="10" x2="23.5" y2="18" stroke="#f0a030" strokeWidth="1.7" strokeLinecap="round"/>
-          <path d="M4.5 18 C2.5 22.5 3.5 27.5 7.5 29.8 C10 31.2 18 31.2 20.5 29.8 C24.5 27.5 25.5 22.5 23.5 18"
-            stroke="#f0a030" strokeWidth="1.7" strokeLinecap="round" fill="#f0a030" fillOpacity="0.08"/>
-          <path d="M7 22.5 Q14 20 21 22.5" stroke="#f0a030" strokeWidth="1.3" strokeLinecap="round"/>
-          <circle cx="11.5" cy="26" r="1.4" fill="#f0a030"/>
-          <circle cx="16.5" cy="25" r="1" fill="#f0a030" fillOpacity="0.7"/>
-          <circle cx="20" cy="27" r="0.9" fill="#f0a030" fillOpacity="0.45"/>
+        {/* 高黎贡山 + 怒江 */}
+        <svg width="48" height="48" viewBox="0 0 28 28" fill="none">
+          <path d="M1 27 L10 4 L16.5 14 L22.5 6 L27 27 Z" fill="#ffffff"/>
+          <line x1="1" y1="20" x2="27" y2="20" stroke="#1ed760" strokeWidth="1.8" strokeLinecap="round"/>
+          <line x1="1" y1="24" x2="27" y2="24" stroke="#1ed760" strokeWidth="1.8" strokeLinecap="round"/>
         </svg>
-        <span style={{ fontSize:13, letterSpacing:'.08em' }}>Cox-Lab 加载中…</span>
+        <span style={{ fontSize:13, letterSpacing:'.18em', fontFamily:"'Josefin Sans', sans-serif", fontWeight:700 }}>GAURI</span>
       </div>
     )
   }

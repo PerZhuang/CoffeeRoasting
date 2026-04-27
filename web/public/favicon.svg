@@ -1,3 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <text y=".9em" font-size="90">☕</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#000000"/>
+  <!-- Gaoligong mountain silhouette (two peaks, flat Bauhaus fill) -->
+  <path d="M2 59 L23 11 L37 32 L50 16 L62 59Z" fill="#ffffff"/>
+  <!-- Nu River — two horizontal lines in Spotify green -->
+  <line x1="2" y1="48" x2="62" y2="48" stroke="#1ed760" stroke-width="3" stroke-linecap="round"/>
+  <line x1="2" y1="55" x2="62" y2="55" stroke="#1ed760" stroke-width="3" stroke-linecap="round"/>
 </svg>

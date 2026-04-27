@@ -513,7 +513,7 @@ body {
   display: flex; align-items: center;
 }
 .nx-nav-brand { display: flex; align-items: center; gap: 8px; }
-.nx-nav-wordmark { font-size: 18px; font-weight: 900; letter-spacing: -.02em; color: #fff; }
+.nx-nav-wordmark { font-family: 'Josefin Sans', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: .18em; color: #fff; }
 .nx-nav-links { display: flex; gap: 24px; margin-left: 40px; font-size: 13px; font-weight: 500; }
 .nx-nav-link { color: #b3b3b3; cursor: pointer; }
 .nx-nav-link-active { color: #fff; }

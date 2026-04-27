@@ -76,7 +76,7 @@ export default function BeanPage({
         <div className="nx-bp-hero-content">
           <div className="nx-bp-eyebrow" style={{ color: accent }}>
             <OriginIcon kind={vis.kind} size={13} color={accent}/>
-            {vis.region ?? 'COX·LAB'}
+            {vis.region ?? 'GAURI'}
           </div>
           <h1 className="nx-bp-title">{beanName}</h1>
           <div className="nx-bp-meta">

@@ -14,11 +14,13 @@ export default function NxNav({ page, onNavigate, mode = 'page' }) {
       <div className="nx-nav-brand" onClick={() => onNavigate('home')}
            style={{ cursor: 'pointer' }}>
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="11" stroke="#1ed760" strokeWidth="1.8"/>
-          <path d="M5 14 Q9 7 14 11 T23 14" stroke="#1ed760" strokeWidth="2"/>
-          <circle cx="14" cy="14" r="2.2" fill="#1ed760"/>
+          {/* Gaoligong mountain silhouette */}
+          <path d="M1 26 L10 5 L16 14 L22 7 L27 26Z" fill="#ffffff"/>
+          {/* Nu River — two horizontal green lines */}
+          <line x1="1" y1="20" x2="27" y2="20" stroke="#1ed760" strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="1" y1="23" x2="27" y2="23" stroke="#1ed760" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
-        <span className="nx-nav-wordmark">COX·LAB</span>
+        <span className="nx-nav-wordmark">GAURI</span>
       </div>
       <div className="nx-nav-links">
         {NAV_LINKS.map(link => (
