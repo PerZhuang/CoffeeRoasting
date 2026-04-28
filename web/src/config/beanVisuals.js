@@ -40,6 +40,17 @@ export const beanPoster = {
     description: '埃塞俄比亚罕贝拉原生种水洗，来自 1900–2300m 高原。茉莉花香与柑橘酸质独特，初批 7 炉试烘完成。',
     genres:      ['茉莉', '佛手柑', '蜂蜜'],
   },
+  rwanda_biwumba_red_bourbon_nat: {
+    kind:        'rwanda',
+    grad:        'linear-gradient(135deg, #0f0505 0%, #3d0d0d 50%, #c03040 100%)',
+    accent:      '#e05050',
+    tag:         '历史最高分 ★8.5',
+    tagline:     '干红葡萄酒 · 可可回甘 · 明亮果酸',
+    region:      '卢旺达 · 北部省比温巴',
+    description: 'NOUA 庄园红波旁日晒，首炉即达 8.5/10，为当前历史最高分。零负 ROR、萃取率 19.4% 命中 SCA 金杯。',
+    genres:      ['葡萄酒', '可可', '果酸', '回甘'],
+    heroDevPct:  '19.5%',
+  },
 }
 
 export const FALLBACK_POSTER = {

@@ -98,5 +98,43 @@ export default function OriginArt({ kind }) {
     </svg>
   )
 
+  if (kind === 'rwanda') return (
+    <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" fill="none" style={style}>
+      <defs>
+        <radialGradient id="rwaGlow" cx="85%" cy="20%" r="50%">
+          <stop offset="0" stopColor="rgba(192,48,64,0.5)"/>
+          <stop offset="1" stopColor="rgba(192,48,64,0)"/>
+        </radialGradient>
+      </defs>
+      {/* Warm crimson glow — Red Bourbon harvest light */}
+      <rect width="400" height="260" fill="url(#rwaGlow)"/>
+      {/* Morning mist bands (Rwanda "Mille Collines" fog) */}
+      <path d="M-10 105 Q130 96 260 103 T430 99" stroke="rgba(255,255,255,0.16)" strokeWidth="1.5"/>
+      <path d="M-10 122 Q130 114 260 120 T430 116" stroke="rgba(255,255,255,0.11)" strokeWidth="1"/>
+      {/* Rolling hills — back layer */}
+      <path d="M0 195 Q55 165 110 182 Q165 199 220 175 Q275 151 330 170 Q370 182 400 165 L400 260 L0 260Z"
+            fill="rgba(0,0,0,0.22)"/>
+      {/* Rolling hills — mid layer */}
+      <path d="M0 218 Q65 198 130 210 Q195 222 260 202 Q315 184 370 200 L400 194 L400 260 L0 260Z"
+            fill="rgba(0,0,0,0.38)"/>
+      {/* Rolling hills — front layer */}
+      <path d="M0 242 Q85 226 170 236 Q255 246 340 232 Q370 226 400 234 L400 260 L0 260Z"
+            fill="rgba(0,0,0,0.56)"/>
+      {/* Coffee branch with vivid Red Bourbon cherries */}
+      <g transform="translate(38,172)">
+        <path d="M0 0 Q38 -14 76 -5" stroke="rgba(255,255,255,0.38)" strokeWidth="1.5"/>
+        {[9,23,38,54,68].map((x,i) => (
+          <ellipse key={i} cx={x} cy={-3+(i%2)*8} rx="8.5" ry="3.2"
+                   fill="rgba(255,255,255,0.20)"
+                   transform={`rotate(${(i%2)*32-16} ${x} ${-3+(i%2)*8})`}/>
+        ))}
+        {/* Red cherries — prominent, distinctly crimson */}
+        {[14,32,52,68].map((x,i) => (
+          <circle key={i} cx={x} cy={6+(i%2)*3} r="3.2" fill="rgba(200,48,56,0.95)"/>
+        ))}
+      </g>
+    </svg>
+  )
+
   return null
 }

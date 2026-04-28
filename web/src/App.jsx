@@ -64,6 +64,18 @@ const BEANS = [
     cuppingFilter:  f => /eth|hambela/i.test(f),
     analysisFilter: f => /log009/.test(f),
   },
+  {
+    id:          'rwanda_biwumba_red_bourbon_nat',
+    name:        '卢旺达比温巴红波旁',
+    variety:     'Red Bourbon',
+    process:     '日晒',
+    altitude:    '1800–2000m',
+    filterKey:   'Rwanda',
+    cardFile:    'rwanda_biwumba_red_bourbon_nat',
+    klogOffset:  76,          // roast_id 26 + 76 = log0102 ✓
+    cuppingFilter:  f => /redbourbon|rwa.*bourbon/i.test(f),
+    analysisFilter: f => /rwa.*bourbon|redbourbon/i.test(f),
+  },
 ]
 
 export default function App() {

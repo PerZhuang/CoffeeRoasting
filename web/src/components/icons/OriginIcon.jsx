@@ -32,5 +32,15 @@ export default function OriginIcon({ kind, size = 16, color = 'currentColor' }) 
     </svg>
   )
 
+  if (kind === 'rwanda') return (
+    <svg {...props}>
+      {/* Rolling hills — "mille collines" */}
+      <path d="M2 20 Q6 11 10 16 Q14 9 18 14 L22 20Z"/>
+      {/* Red Bourbon cherry + stem */}
+      <line x1="14" y1="9" x2="15" y2="6" strokeWidth="1.3"/>
+      <circle cx="14" cy="7" r="2" fill={color} stroke="none"/>
+    </svg>
+  )
+
   return null
 }
