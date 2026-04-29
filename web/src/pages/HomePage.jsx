@@ -113,31 +113,37 @@ export default function HomePage({ roasts, beans, page, onNavigate, onSelectBean
 function FlavorBestCard({ rank, bean, vis, onClick }) {
   const [hovered, setHovered] = useState(false)
   return (
-    <div className="nx-poster-card"
-         style={{
-           transform: hovered ? 'translateY(-4px)' : 'none',
-           boxShadow: hovered ? '0 14px 30px rgba(0,0,0,0.6)' : 'none',
-         }}
-         onClick={onClick}
-         onMouseEnter={() => setHovered(true)}
-         onMouseLeave={() => setHovered(false)}>
-      <div className="nx-poster-bg" style={{ background: vis.grad }}/>
-      <OriginArt kind={vis.kind}/>
-      <div className="nx-poster-fade"/>
-      <div className="nx-poster-rank" style={{ WebkitTextStroke: `1.5px ${vis.accent}` }}>
+    // Outer item: number bleeds left, card sits on top with z-index
+    <div className="nx-poster-item">
+      {/* Large rank number — behind card, partially peeking left */}
+      <div className="nx-poster-rank"
+           style={{ WebkitTextStroke: `2px ${vis.accent}`, color: 'transparent' }}>
         {rank}
       </div>
-      <div className="nx-poster-score" style={{ color: vis.accent }}>
-        ★ {bean.best.toFixed(1)}
-      </div>
-      <div className="nx-poster-origin" style={{ color: vis.accent }}>
-        <OriginIcon kind={vis.kind} size={12} color={vis.accent}/>
-        {vis.region?.split('·')[0]?.trim()}
-      </div>
-      <div className="nx-poster-bottom">
-        <div className="nx-poster-name">{bean.name}</div>
-        <div className="nx-poster-tagline" style={{ color: vis.accent }}>{vis.tagline}</div>
-        <div className="nx-poster-stats">{bean.count} 炉次 · {bean.versions}</div>
+      {/* Card — shifted to the right, z-index above number */}
+      <div className="nx-poster-card"
+           style={{
+             transform: hovered ? 'translateY(-4px)' : 'none',
+             boxShadow: hovered ? '0 14px 30px rgba(0,0,0,0.6)' : 'none',
+           }}
+           onClick={onClick}
+           onMouseEnter={() => setHovered(true)}
+           onMouseLeave={() => setHovered(false)}>
+        <div className="nx-poster-bg" style={{ background: vis.grad }}/>
+        <OriginArt kind={vis.kind}/>
+        <div className="nx-poster-fade"/>
+        <div className="nx-poster-score" style={{ color: vis.accent }}>
+          ★ {bean.best.toFixed(1)}
+        </div>
+        <div className="nx-poster-origin" style={{ color: vis.accent }}>
+          <OriginIcon kind={vis.kind} size={12} color={vis.accent}/>
+          {vis.region?.split('·')[0]?.trim()}
+        </div>
+        <div className="nx-poster-bottom">
+          <div className="nx-poster-name">{bean.name}</div>
+          <div className="nx-poster-tagline" style={{ color: vis.accent }}>{vis.tagline}</div>
+          <div className="nx-poster-stats">{bean.count} 炉次 · {bean.versions}</div>
+        </div>
       </div>
     </div>
   )

@@ -572,27 +572,40 @@ body {
 
 /* ── Poster rail ── */
 .nx-poster-rail {
-  padding: 0 56px 6px; display: flex; gap: 14px;
+  padding: 0 56px 16px; display: flex; gap: 0;
   overflow-x: auto; scrollbar-width: none;
 }
 .nx-poster-rail::-webkit-scrollbar { display: none; }
 
-/* ── Poster card (200×300) ── */
+/* ── Poster item: wrapper that holds rank number + card ── */
+.nx-poster-item {
+  position: relative; flex-shrink: 0;
+  width: 248px;   /* 48px left overhang + 200px card */
+  height: 300px;
+}
+
+/* Large rank number — sits behind the card, bleeds out to the left */
+.nx-poster-rank {
+  position: absolute; bottom: 0; left: 0;
+  font-size: 160px; font-weight: 900; color: transparent;
+  line-height: 0.82; font-variant-numeric: tabular-nums;
+  letter-spacing: -.06em; user-select: none;
+  z-index: 0;
+}
+
+/* ── Poster card (200×300) — z-index above rank number ── */
 .nx-poster-card {
-  flex-shrink: 0; width: 200px; height: 300px; position: relative;
+  position: absolute; right: 0; top: 0;
+  width: 200px; height: 300px;
   border-radius: 8px; overflow: hidden; cursor: pointer;
   border: 1px solid rgba(255,255,255,0.08);
   transition: transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s;
+  z-index: 1;
 }
 .nx-poster-bg { position: absolute; inset: 0; }
 .nx-poster-fade {
   position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.95) 100%);
-}
-.nx-poster-rank {
-  position: absolute; top: 8px; left: 10px;
-  font-size: 96px; font-weight: 900; color: rgba(0,0,0,0.55);
-  line-height: 0.9; font-variant-numeric: tabular-nums; letter-spacing: -.05em;
 }
 .nx-poster-score {
   position: absolute; top: 14px; right: 12px;
@@ -1313,9 +1326,10 @@ body {
   .nx-library-section { padding: 28px 0 48px; }
 
   /* ── Poster rail ── */
-  .nx-poster-rail { padding: 0 16px 6px; gap: 10px; }
+  .nx-poster-rail { padding: 0 16px 10px; gap: 0; }
+  .nx-poster-item { width: 186px; height: 230px; }
   .nx-poster-card { width: 150px; height: 230px; }
-  .nx-poster-rank { font-size: 70px; }
+  .nx-poster-rank { font-size: 120px; }
   .nx-poster-name { font-size: 13px; }
   .nx-poster-origin { top: 90px; }
 
