@@ -577,14 +577,14 @@ body {
 }
 .nx-poster-rail::-webkit-scrollbar { display: none; }
 
-/* ── Poster item: wrapper that holds rank number + card ── */
+/* ── Poster item: left padding creates space for rank number overhang ── */
 .nx-poster-item {
   position: relative; flex-shrink: 0;
-  width: 248px;   /* 48px left overhang + 200px card */
+  padding-left: 48px;   /* rank number bleeds into this space */
   height: 300px;
 }
 
-/* Large rank number — sits behind the card, bleeds out to the left */
+/* Large rank number — absolutely positioned bottom-left, behind the card */
 .nx-poster-rank {
   position: absolute; bottom: 0; left: 0;
   font-size: 160px; font-weight: 900; color: transparent;
@@ -593,10 +593,10 @@ body {
   z-index: 0;
 }
 
-/* ── Poster card (200×300) — z-index above rank number ── */
+/* ── Poster card (200×300) — in normal flow, sits right of padding ── */
 .nx-poster-card {
-  position: absolute; right: 0; top: 0;
-  width: 200px; height: 300px;
+  position: relative;   /* NOT absolute — stays in flow, no vertical clipping */
+  flex-shrink: 0; width: 200px; height: 300px;
   border-radius: 8px; overflow: hidden; cursor: pointer;
   border: 1px solid rgba(255,255,255,0.08);
   transition: transform .3s cubic-bezier(.2,.8,.3,1), box-shadow .3s;
@@ -1327,7 +1327,7 @@ body {
 
   /* ── Poster rail ── */
   .nx-poster-rail { padding: 0 16px 10px; gap: 0; }
-  .nx-poster-item { width: 186px; height: 230px; }
+  .nx-poster-item { padding-left: 36px; height: 230px; }
   .nx-poster-card { width: 150px; height: 230px; }
   .nx-poster-rank { font-size: 120px; }
   .nx-poster-name { font-size: 13px; }
