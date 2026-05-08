@@ -117,7 +117,7 @@ function FlavorBestCard({ rank, bean, vis, onClick }) {
     <div className="nx-poster-item">
       {/* Large rank number — behind card, partially peeking left */}
       <div className="nx-poster-rank"
-           style={{ WebkitTextStroke: `2px ${vis.accent}`, color: 'transparent' }}>
+           style={{ WebkitTextStroke: `3px ${vis.accent}`, color: 'transparent' }}>
         {rank}
       </div>
       {/* Card — shifted to the right, z-index above number */}
