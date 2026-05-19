@@ -74,7 +74,20 @@ const BEANS = [
     cardFile:    'rwanda_biwumba_red_bourbon_nat',
     klogOffset:  76,          // roast_id 26 + 76 = log0102 ✓
     cuppingFilter:  f => /redbourbon|rwa.*bourbon/i.test(f),
-    analysisFilter: f => /rwa.*bourbon|redbourbon/i.test(f),
+    // 按 log 编号匹配：log0102-log0108（roast_id 26-32）
+    analysisFilter: f => /log010[2-8]|rwa.*bourbon|redbourbon/i.test(f),
+  },
+  {
+    id:          'colombia_cauca_microwashed',
+    name:        '哥伦比亚考卡微生物水洗',
+    variety:     'Caturra/Colombia',
+    process:     '微生物水洗',
+    altitude:    '1895–1950m',
+    filterKey:   'Cauca',
+    cardFile:    'colombia_cauca_microwashed',
+    klogOffset:  76,          // roast_id 33 + 76 = log0109 ✓
+    cuppingFilter:  f => /cauca|microwash/i.test(f),
+    analysisFilter: f => /log0109|col.*cauca/i.test(f),
   },
 ]
 

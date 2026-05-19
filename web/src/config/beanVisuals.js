@@ -40,6 +40,17 @@ export const beanPoster = {
     description: '埃塞俄比亚罕贝拉原生种水洗，来自 1900–2300m 高原。茉莉花香与柑橘酸质独特，初批 7 炉试烘完成。',
     genres:      ['茉莉', '佛手柑', '蜂蜜'],
   },
+  colombia_cauca_microwashed: {
+    kind:        'colombia',
+    grad:        'linear-gradient(135deg, #071a0e 0%, #0f3320 50%, #1a6640 100%)',
+    accent:      '#3ecf7a',
+    tag:         '首炉 ★8.0',
+    tagline:     '水果酸糖 · 明亮花果 · 微发酵',
+    region:      '哥伦比亚 · 考卡山产区',
+    description: '考卡山产区微生物水洗，海拔 1895-1950m，首炉 120g 即达 8.0/10。水果酸糖与发酵复杂度平衡，余韵淡淡烟草。',
+    genres:      ['水果酸糖', '花果酸', '微发酵', '洁净'],
+    heroDevPct:  '19.8%',
+  },
   rwanda_biwumba_red_bourbon_nat: {
     kind:        'rwanda',
     grad:        'linear-gradient(135deg, #0f0505 0%, #3d0d0d 50%, #c03040 100%)',
